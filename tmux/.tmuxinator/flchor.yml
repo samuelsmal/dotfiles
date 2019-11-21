@@ -1,0 +1,10 @@
+# ~/.tmuxinator/flchor.yml
+
+name: flchor
+root: ~/Developer/Freelance/Frauenchor-Höngg/Code
+
+windows:
+  - editor:
+      panes:
+        - vim
+  - server: middleman server

@@ -1,0 +1,66 @@
+[alias]
+  undo=reset --hard
+  new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+  co = checkout
+  cl = clone --depth 1
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  ls = log --stat --abbrev-commit
+  l  = log --graph --pretty=format:'%C(yellow) %h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+  sl = stash list
+  sa = stash apply
+  ss = stash save
+  tree = log --oneline --decorate --all --graph
+  prune = fetch origin --prune
+  tree = log --oneline --decorate --all --graph
+  prune = fetch origin --prune
+  alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+  yolo = "!f() { git commit -m \"$(curl -s whatthecommit.com/index.txt)\"; }; f"
+[user]
+  name = Samuel von Baussnern
+  email = samuel.vonbaussnern@gmail.com
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = red reverse
+  local = blue
+  remote = green
+[color "diff"]
+  meta = yellow
+  frag = magenta
+  old = red bold
+  new = green
+  plain = white
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[push]
+  default = upstream
+[pull]
+  default = current
+[core]
+  excludesfile = ~/.gitignore_global
+  editor = vim
+[merge]
+  tool = fugitive
+[mergetool "fugitive"]
+  cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false

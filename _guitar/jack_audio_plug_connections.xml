@@ -1,0 +1,35 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.5.5" name="jack_audio_plug_connections">
+ <output-sockets>
+  <socket exclusive="off" client="gx_head_fx" name="gx_head_fx" type="jack-audio">
+   <plug>out_0</plug>
+   <plug>out_1</plug>
+  </socket>
+  <socket exclusive="off" client="gx_head_amp" name="gx_head_amp" type="jack-audio">
+   <plug>out_0</plug>
+  </socket>
+  <socket exclusive="off" client="system" name="system" type="jack-audio">
+   <plug>capture_1</plug>
+   <plug>capture_2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket exclusive="off" client="system" name="system" type="jack-audio">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+  </socket>
+  <socket exclusive="off" client="gx_head_fx" name="gx_head_fx" type="jack-audio">
+   <plug>in_0</plug>
+  </socket>
+  <socket exclusive="off" client="gx_head_amp" name="gx_head_amp" type="jack-audio">
+   <plug>in_0</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="gx_head_amp" input="gx_head_fx" type="jack-audio"/>
+  <cable output="gx_head_fx" input="system" type="jack-audio"/>
+  <cable output="system" input="gx_head_amp" type="jack-audio"/>
+ </cables>
+</patchbay>
+

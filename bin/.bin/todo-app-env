@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+cd $HOME/proj/metis
+tmux new-session -d 'vim'
+tmux split-window -v 'npm start'
+tmux -2 attach-session -d

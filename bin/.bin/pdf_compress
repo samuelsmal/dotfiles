@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+input_file=""
+level="ebook"
+
+while getopts "h?f:L?H?" opt; do
+    case "$opt" in
+    h|\?)
+        echo "Usage: pdf_compress -[LH] -f <input-file-path>"
+        echo "  -L lower compression rate; results in -dPDFSETTINGS=screen"
+        echo "  -H higher compression rate; results in -dPDFSETTINGS=ebook"
+        exit 0
+        ;;
+    L) level="screen"
+        ;;
+    H) level="ebook"
+        ;;
+    f) input_file=$OPTARG
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+output_file=${input_file%.pdf}
+
+gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$level \
+-sOutputFile="${output_file}_compressed.pdf" ${input_file}

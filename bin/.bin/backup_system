@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Backup script using rsync.
+
+SOURCES=(/root /etc /home /boot /opt)
+TARGET="media/backup"
+
+rsync -aAXv --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found", "/home/*/.cache/*", "/home/*/.local/share/Trash/*"} --delete /* /path/to/backup/folder

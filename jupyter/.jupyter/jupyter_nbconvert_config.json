@@ -1,0 +1,9 @@
+{
+  "Exporter": {
+    "preprocessors": [
+      "jupyter_contrib_nbextensions.nbconvert_support.CodeFoldingPreprocessor",
+      "jupyter_contrib_nbextensions.nbconvert_support.PyMarkdownPreprocessor"
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+keys=(bitbucket contovista github)
+
+for i in ${keys[@]}; do
+  echo ${i}
+  ssh-add $HOME/.ssh/${i}/id_rsa
+done

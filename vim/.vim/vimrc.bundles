@@ -1,0 +1,81 @@
+if &compatible
+  set nocompatible
+endif
+
+" Dein
+set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+if dein#load_state('~/.cache/dein')
+  call dein#begin('~/.cache/dein')
+
+  " Let dein manage dein
+  " Required:
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+  call dein#add('Shougo/deoplete.nvim')
+
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-surround')
+  call dein#add('tpope/vim-classpath')
+  call dein#add('altercation/vim-colors-solarized')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('itchyny/lightline.vim')
+  call dein#add('godlygeek/tabular')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('scrooloose/nerdcommenter')
+  call dein#add('unblevable/quick-scope')
+  call dein#add('mileszs/ack.vim')
+
+  call dein#add('w0rp/ale')
+  call dein#add('sheerun/vim-polyglot')
+
+  " Alignment
+  call dein#add('junegunn/vim-easy-align')
+
+  call dein#add('terryma/vim-multiple-cursors')
+
+  " Display vim diff in the gutter
+  call dein#add('airblade/vim-gitgutter')
+
+  " Better parentheses
+  call dein#add('Raimondi/delimitMate')
+  call dein#add('kien/rainbow_parentheses.vim')
+
+  " call dein#add('vim-syntastic/syntastic')
+
+  " HTML/JS/CSS/LESS
+  call dein#add('gregsexton/MatchTag')
+  " call dein#add('mattn/emmet-vim')
+  call dein#add('groenewege/vim-less')
+  " call dein#add('marijnh/tern_for_vim')
+  " call dein#add('mxw/vim-jsx')
+  " call dein#add('pangloss/vim-javascript')
+  call dein#add('isRuslan/vim-es6')
+
+  " Clojure
+  call dein#add('tpope/vim-fireplace')
+
+
+  call dein#add('tpope/vim-ragtag')
+  " Ctags
+  "call dein#add( 'majutsushi/tagbar'
+  "call dein#add( 'xolox/vim-misc'
+  "call dein#add( 'xolox/vim-easytags'
+
+  " Notational Velocity
+  " call dein#add( 'cwoac/nvim'
+
+  " Snippets
+  " call dein#add( 'SirVer/ultisnips'
+
+  " Snippets are separated from the engine. Add this if you want them:
+  " call dein#add( 'honza/vim-snippets'
+
+  " Haskell
+  " call dein#add( 'bitc/vim-hdevtools'
+
+  " todo txt
+  call dein#add('dbeniamine/todo.txt-vim')
+
+  call dein#end()
+  call dein#save_state()
+endif

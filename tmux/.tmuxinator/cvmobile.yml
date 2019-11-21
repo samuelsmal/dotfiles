@@ -1,0 +1,38 @@
+# ~/.tmuxinator/cvmobile.yml
+
+name: cvmobile
+root: ~/Developer/Contovista/01_code/
+
+pre: sudo nginx
+post: sudo nginx -s quit
+
+windows:
+  - marlin:
+      root: ~/Developer/Contovista/01_code/service-marlin
+      panes:
+        - git pull && lein clean && lein mysql ring server-headless
+  - modules:
+      root: ~/Developer/Contovista/01_code/ui-modules
+      layout: decc,239x62,0,0[239x54,0,0,2,239x7,0,55,6]
+      panes:
+        - vim
+        - git pull && npm update && bower update
+  - base:
+      root: ~/Developer/Contovista/01_code/ui-pfm-mobile
+      layout: decc,239x62,0,0[239x54,0,0,2,239x7,0,55,6]
+      panes:
+        - vim
+        - git pull && npm update && bower update
+  - zkb:
+      root: ~/Developer/Contovista/01_code/ui-pfm-mobile-zkb
+      layout: decc,239x62,0,0[239x54,0,0,2,239x7,0,55,6]
+      panes:
+        - vim
+        - git pull && npm update && bower update
+  - szkb:
+      root: ~/Developer/Contovista/01_code/ui-pfm-mobile-szkb
+      layout: decc,239x62,0,0[239x54,0,0,2,239x7,0,55,6]
+      panes:
+        - vim
+        - git pull && npm update && bower update
+

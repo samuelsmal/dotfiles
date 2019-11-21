@@ -1,0 +1,27 @@
+[/]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/']
+
+[custom-keybindings/custom0]
+binding='<Primary><Alt>t'
+command='gnome-terminal'
+name='terminal'
+
+[custom-keybindings/custom1]
+binding='<Primary><Alt>k'
+command='/home/sam/.bin/start-or-switch-to keepassx'
+name='keepassx'
+
+[custom-keybindings/custom2]
+binding='<Primary><Alt>f'
+command='/home/sam/.bin/start-or-switch-to firefox'
+name='frefox'
+
+[custom-keybindings/custom3]
+binding='<Primary><Alt>s'
+command='/home/sam/.bin/start-or-switch-to /snap/bin/spotify'
+name='spotify'
+
+[custom-keybindings/custom4]
+binding='<Primary><Alt>j'
+command='/home/sam/.bin/start-or-switch-to /bin/joplin-desktop'
+name='joplin'

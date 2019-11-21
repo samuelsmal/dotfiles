@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=load-ssh-keys
+GenericName=Loads some ssh-keys. See /home/muma/dotfiles/scripts/load-ssh-keys.
+Exec=~/.bin/load-ssh-keys
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true

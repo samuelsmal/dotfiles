@@ -1,0 +1,4 @@
+/jupyter/.jupyter/migrated
+**/*wpa_supplicant.conf
+/jupyter/.jupyter/lab/workspaces/
+.version_lock

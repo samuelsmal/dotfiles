@@ -1,0 +1,13 @@
+# ~/.tmuxinator/prpythoncv.yml
+
+name: prpythoncv
+root: ~/Developer/Learning/python/Programming-computer-vision-with-python/
+
+pre_window: source activate compsim
+
+post: source deactivate
+
+windows:
+  - editor:
+      panes:
+        - vim

@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+function {
+  t=(bitbucket github)
+
+  added_keys=`ssh-add -l`
+
+  for i in $t; do
+    if [ ! $(echo $added_keys | grep -o -e $i) ]; then
+      echo ssh-add ~/.ssh/$i/id_rsa
+      ssh-add ~/.ssh/$i/id_rsa
+    fi
+  done
+}

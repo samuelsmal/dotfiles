@@ -1,0 +1,10 @@
+# ~/.tmuxinator/flchristian.yml
+
+name: flchristian
+root: /home/muma/Developer/Freelance/Christian-Kerepeszki/webpage
+
+windows:
+  - editor:
+      panes:
+        - vim
+        - middleman server

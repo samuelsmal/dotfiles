@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if pgrep $1 > /dev/null
+then
+  wmctrl -a $1
+else
+  $1
+fi

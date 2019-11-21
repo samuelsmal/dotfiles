@@ -1,0 +1,31 @@
+# ~/.tmuxinator/cvdesktop.yml
+
+name: cvdesktop
+root: ~/Developer/Contovista/01_code/
+
+pre: sudo nginx
+post: sudo nginx -s quit
+
+windows:
+  - marlin:
+      root: ~/Developer/Contovista/01_code/service-marlin
+      panes:
+        - git pull && lein clean && lein mysql ring server-headless
+  - modules:
+      root: ~/Developer/Contovista/01_code/ui-modules
+      layout: main-horizontal
+      panes:
+        - vim
+        - git pull && npm update && bower update
+  - base:
+      root: ~/Developer/Contovista/01_code/ui-pfm
+      layout: main-horizontal
+      panes:
+        - vim
+        - git pull && npm update && bower update
+  - zkb:
+      root: ~/Developer/Contovista/01_code/ui-pfm-zkb
+      layout: main-horizontal
+      panes:
+        - vim
+        - git pull && npm update && bower update
