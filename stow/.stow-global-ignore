@@ -9,6 +9,8 @@
 
 ^/\.git
 ^/\.gitignore
+^/\.version_lock
+^/\.newest_version_lock
 
 .+\.swp      # vim swap files
 .*\.un~      # vim temp buffer file
