@@ -56,8 +56,8 @@
 
 ## DONE (not all features)
 
--[x] find a good script which sets up the symlinks in a non stupid way
--[x] use dconf and dconf-editor to extract the nice gnome settings
--[x] create setup script (should respect hostname or tags)
--[x] find a way to setup up ssh stuff in a good way
--[x] add keyboard shortcut exporter
+- find a good script which sets up the symlinks in a non stupid way
+- use dconf and dconf-editor to extract the nice gnome settings
+- create setup script (should respect hostname or tags)
+- find a way to setup up ssh stuff in a good way
+- add keyboard shortcut exporter
