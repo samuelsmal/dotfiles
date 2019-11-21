@@ -36,17 +36,13 @@ migrate (){
   if [ -f "$version_lock_file_name" ]; then
     version_lock=$(<"$version_lock_file_name")
   fi
-  newest_version=$(<"./.newest_version_lock")
-
   echo "version_lock: $version_lock"
-  echo "newest: $newest_version"
 
-  for step in $(seq $((version_lock + 1)) $newest_version);
+  for step in $(seq $((version_lock + 1)) 1);
   do
-    echo "doing step $step"
-
     case "$step" in
       "1")
+        echo "doing step 0->1"
         sudo dnf remove snapd tmuxinator
         install_flatpaks
         ;;
