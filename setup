@@ -1,7 +1,5 @@
 #! /bin/bash
 
-new_host_name=""
-
 check_and_remove_file () {
   [[ -f $1 ]] && rm -f $1
 }
@@ -207,7 +205,7 @@ apply_system_settings () {
 name_system () {
   # Naming the system
   echo "I hearby declare this computer working! Awake ..."
-  hostnamectl set-hostname --static $new_host_name
+  hostnamectl set-hostname --static $1
 }
 
 prepare_thunderbird_settings () {
@@ -267,7 +265,6 @@ _setup () {
   add_autostart_applications
   install_conda
   apply_system_settings
-  name_system
   copy_thunderbird_settings
   apply_firefox_user_chrome
   setup_ssh
@@ -283,67 +280,64 @@ help_message () {
   echo "    ./setup -d                    Debug (executes just one function)"
 }
 
-while getopts "hn:pdacstum" opt; do
-  case $opt in
-    h)
+# got this setup from:
+# - https://gist.github.com/magnetikonline/22c1eb412daa350eeceee76c97519da8
+# - https://gist.github.com/cosimo/3760587
+
+opts=$(getopt \
+  -o hums \
+  --long help,update,setup,hostname:,migrate,conda,firefox,ssh,vim \
+  --name "setup" \
+  -- "$@"
+)
+
+eval set -- "$opts"
+
+setup_system=false
+new_host_name=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h | --help )
       help_message
+      shift
       exit 0
       ;;
-    n)
-      new_host_name=$OPTARG
-      echo "Setting up system using $new_host_name as hostname..."
-      _setup
-      echo "Setting up system using $new_host_name as hostname... done. Enjoy!"
-      exit 0
-      ;;
-    p)
-      prepare
-      exit 0
-      ;;
-    d)
-      echo "DEBUGGING!"
-      install_node
-      echo "DEBUGGING! END!"
-      exit 0
-      ;;
-    a)
-      apply_system_settings
-      exit 0
-      ;;
-    c)
-      cleanup
-      exit 0
-      ;;
-    s)
-      setup_ssh
-      exit 0
-      ;;
-    t)
-      setup_tir
-      exit 0
-      ;;
-    u)
+    -u | --update )
       update_system
-      exit 0
+      shift
       ;;
-    m)
+    -m | --migrate )
       migrate
+      shift
+      ;;
+    --hostname )
+      new_host_name=$2
+      shift 2
+      ;;
+    --setup )
+      setup_system=true
+      shift
+      ;;
+    -- )
+      shift
+      break
+      ;;
+    * )
+      echo "huh? no clue what to do with that: $1"
+      help_message
+      shift
       exit 0
-      ;;
-    \?)
-      echo "huh? no clue what to do with that: -$OPTARG" 1>&2
-      help_message
-      exit 1
-      ;;
-    *)
-      echo "Invalid option: $OPTARG requires an argument" 1>&2
-      help_message
-      exit 1
       ;;
   esac
 done
 
-if [ $OPTIND -eq 1 ]; then echo "No options were passed"; fi
-shift $((OPTIND-1))
-help_message
+if [ "$setup_system" = true ]; then
+  _setup
+
+  if [ ! "x$new_host_name" = "x" ]; then
+    name_system $new_host_name
+  fi
+fi
+
 exit 1
