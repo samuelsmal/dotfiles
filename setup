@@ -39,8 +39,7 @@ migrate (){
   fi
   echo "version_lock: $version_lock"
 
-  for step in $(seq $((version_lock + 1)) $newest_migration);
-  do
+  for step in $(seq $((version_lock + 1)) $newest_migration); do
     case "$step" in
       "1")
         echo "doing step 0->1"
@@ -50,6 +49,7 @@ migrate (){
       "2")
         echo "doing step 1->2"
         install_nordvpn
+        ;;
     esac
 
     echo "done with step $step"
