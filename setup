@@ -32,13 +32,14 @@ update_system () {
 
 migrate (){
   version_lock_file_name="./.version_lock"
+  newest_migration=2
   version_lock=0
   if [ -f "$version_lock_file_name" ]; then
     version_lock=$(<"$version_lock_file_name")
   fi
   echo "version_lock: $version_lock"
 
-  for step in $(seq $((version_lock + 1)) 1);
+  for step in $(seq $((version_lock + 1)) $newest_migration);
   do
     case "$step" in
       "1")
@@ -46,6 +47,9 @@ migrate (){
         sudo dnf remove snapd tmuxinator
         install_flatpaks
         ;;
+      "2")
+        echo "doing step 1->2"
+        install_nordvpn
     esac
 
     echo "done with step $step"
@@ -60,7 +64,7 @@ cleanup () {
 }
 
 setup_android_dev () {
-  sudo dnf install android-tools
+  sudo dnf install -y android-tools
 }
 
 install_ruby () {
@@ -88,12 +92,21 @@ install_node () {
   echo "Installing node: done"
 }
 
+install_games () {
+  echo "installing games"
+  flatpak install flathub com.play0ad.zeroad
+  echo "installing games: done"
+}
+
+
 install_flatpaks () {
   echo "Installing flatpaks..."
-  flatpak install flathub discord
-  flatpak install flathub com.spotify.Client
-  flatpak install flathub org.signal.Signal
-  flatpak install flathub org.telegram.desktop
+  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  flatpak install -y flathub discord
+  flatpak install -y flathub com.spotify.Client
+  flatpak install -y flathub org.signal.Signal
+  flatpak install -y flathub org.telegram.desktop
+  flatpak install -y flathub com.mattermost.Desktop
   echo "Installing flatpaks ... done"
 }
 
@@ -101,8 +114,8 @@ install_nordvpn () {
   echo "Installing nordvpn ..."
   nordvpn_version="1.0.0-1"
   sudo wget -qnc "https://repo.nordvpn.com/yum/nordvpn/centos/noarch/Packages/n/nordvpn-release-$nordvpn_version.noarch.rpm" -P /tmp/
-  sudo dnf install /tmp/nordvpn-release-$nordvpn_version.noarch.rpm
-  sudo dnf install nordvpn
+  sudo dnf install -y /tmp/nordvpn-release-$nordvpn_version.noarch.rpm
+  sudo dnf install -y nordvpn
   echo "Installing nordvpn ... done"
 }
 
