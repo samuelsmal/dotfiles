@@ -48,6 +48,8 @@
 
 ## TODO
 
+- cleanup jupyter
+- add min install option (and add installer option)
 - add dropbox installer
 - add android studio
 - add thunderbird (fix google setup)
