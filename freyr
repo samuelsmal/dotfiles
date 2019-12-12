@@ -71,6 +71,21 @@ setup_android_dev () {
   sudo dnf install -y android-tools
 }
 
+
+
+fix_headphone_white_noise () {
+  # this is a fix for the stupid white noise using my dell xps laptop
+  # I got the answer from https://unix.stackexchange.com/questions/336790/how-to-disable-white-noise-with-headphones-in-dell-xps
+  echo "fixing headphone white noise ..."
+  echo "  enabling acpid service"
+  sudo systemctl enable acpid.service
+
+  echo "  copying scripts"
+  sudo cp ./_setup/headphone_white_noise_fix/headphone-plug /etc/acpi/events/
+  sudo cp ./_setup/headphone_white_noise_fix/cancel-white-noise.sh /etc/acpi/actions/
+  echo "fixing headphone white noise ... done"
+}
+
 install_ruby () {
   echo "Installing rvm & ruby ..."
   gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
@@ -291,7 +306,7 @@ help_message () {
 
 opts=$(getopt \
   -o hums \
-  --long help,update,setup,hostname:,migrate,conda,firefox,ssh,vim \
+  --long help,update,setup,hostname:,migrate,conda,firefox,ssh,vim,fix-white-noise \
   --name "${0##*/}" \
   -- "$@"
 )
@@ -322,6 +337,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --setup )
       setup_system=true
+      shift
+      ;;
+    --fix-white-noise )
+      fix_headphone_white_noise
       shift
       ;;
     -- )
