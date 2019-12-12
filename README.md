@@ -14,21 +14,16 @@
 # overview
 
 - Uses `stow` to handle the symlinking.
-- Checkout `setup -h` (or the `setup` file) for what you can do.
+- Checkout `freyr -h` (or the `freyr` file) for what you can do.
 
 ```
 # file tree (excerpt)
-├── _hosts                     # host specific stuff
 ├── README.md                  # this file
 ├── .version_lock              # used for migrating
-├── _setup                     # general setup stuff, aka misc, but with symlinks to anywhere
-├── setup                      # system setup stuff, a bit misc, but with symlink with stow
-├── _ssh                       # only some setup stuff
+├── (_[A-Za-z_-]+)             # folders with this pattern are used by `freyr`
+├── freyr                      # the main setup script
 ├── stow                       # stow settings (ignore file)
-├── _system-settings           # system settings, keyboard shortcuts, ...
-├── _thunderbird               # thunderbird settings, firefox are in _setup (a bit)
-├── (_[A-Za-z_-]+)             # used by setup
-└── ([A-Za-z_-]+)              # used by stow
+└── ([A-Za-z_-]+)              # folders with this pattern are used by `stow`
 ```
 
 ## What I use

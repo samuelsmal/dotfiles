@@ -1,12 +1,10 @@
 #! /bin/bash
 
-# The setup, install, retrieve configs, ... script
-#
-# Called `freyr` after the Norse god who 'is a widely attested god associated with sacral kingship,
-# virility and prosperity, with sunshine and fair weather, and pictured as a phallic fertility god
-# in Norse mythology. Freyr is said to "bestow peace and pleasure on mortals"' (From wikipedia)
-#
-# And this script brings me peace. Maybe not pleasure
+# The setup, install, retrieving and applying config script. Called Freyr after the Norse god, who
+# 'is a widely attested god associated with sacral kingship, virility and prosperity, with sunshine
+# and fair weather, and pictured as a phallic fertility god in Norse mythology. Freyr is said to
+# "bestow peace and pleasure on mortals"' (From wikipedia)
+# And this script brings me pease, maybe not pleasure. A bit prosperity.
 
 check_and_remove_file () {
   [[ -f $1 ]] && rm -f $1
@@ -280,18 +278,16 @@ _setup () {
 }
 
 help_message () {
-  echo "setup - bash script to set up the system"
+  echo "freyr - bash script to set up the system"
   echo "Usage:"
-  echo "    ./setup -h                    Display this message"
-  echo "    ./setup -n <new hostname>     Setup system (links dotfiles, install packages, ...)"
-  echo "    ./setup -p                    Prepare installation: copying thunderbird settings"
-  echo "    ./setup -d                    Debug (executes just one function)"
+  echo "    ./freyr --help                        Display this message"
+  echo "    ./freyr -u --update                   Update system"
+  echo "    ./freyr --hostname <new hostname>     Setup system (links dotfiles, install packages, ...)"
 }
 
 # got this setup from:
 # - https://gist.github.com/magnetikonline/22c1eb412daa350eeceee76c97519da8
 # - https://gist.github.com/cosimo/3760587
-
 
 opts=$(getopt \
   -o hums \
