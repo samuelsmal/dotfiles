@@ -57,6 +57,7 @@ migrate (){
       "3")
         echo "doing step 2->3"
         fix_headphone_white_noise
+        add_autostart_applications
         ;;
     esac
 
@@ -68,7 +69,6 @@ migrate (){
 setup_android_dev () {
   sudo dnf install -y android-tools
 }
-
 
 fix_headphone_white_noise () {
   # this is a fix for the stupid white noise using my dell xps laptop
@@ -199,9 +199,9 @@ setup_vim () {
 add_autostart_applications () {
   local autostart_dir=$HOME/.config/autostart/
   mkdir -p $autostart_dir
-  local ssh_desktop=$autostart_dir/load_ssh_keys.desktop
+  echo "adding load ssh keys to autostart"
   [[ -e $ssh_desktop ]] && rm $ssh_desktop
-  ln -s $PWD/_setup/load-ssh-keys.desktop $ssh_desktop
+  cp $PWD/_setup/load-ssh-keys.desktop $autostart_dir
 }
 
 install_conda () {
@@ -223,7 +223,7 @@ apply_system_settings () {
 name_system () {
   # Naming the system
   echo "I hearby declare this computer working! Awake ..."
-  hostnamectl set-hostname --static $1
+  sudo hostnamectl set-hostname --static $1
 }
 
 prepare_thunderbird_settings () {
@@ -261,13 +261,6 @@ apply_firefox_user_chrome () {
   echo "appyling firefox settings ... done"
 }
 
-fix_ssh_permissions () {
-  echo "fixing ssh permissions ..."
-  echo "TODO"
-  #chmod 700 ~/.ssh
-  echo "fixing ssh permissions ... done"
-}
-
 prepare () {
   echo "Preparing..."
   prepare_thunderbird_settings
@@ -303,7 +296,7 @@ help_message () {
 
 opts=$(getopt \
   -o hums \
-  --long help,update,setup,hostname:,migrate,conda,firefox,ssh,vim,fix-white-noise \
+  --long help,update,setup,hostname:,migrate,dev \
   --name "${0##*/}" \
   -- "$@"
 )
@@ -332,12 +325,12 @@ while [[ $# -gt 0 ]]; do
       new_host_name=$2
       shift 2
       ;;
-    --setup )
+    -s | --setup )
       setup_system=true
       shift
       ;;
-    --fix-white-noise )
-      fix_headphone_white_noise
+    --dev )
+      add_autostart_applications
       shift
       ;;
     -- )
