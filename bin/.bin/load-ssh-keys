@@ -1,8 +1,10 @@
 #!/bin/bash
 
-keys=(bitbucket contovista github)
+# Will add all found ssh keys. This expects a certain setup, namely that all ssh keys are inside a
+# folder (hopefully), the private keys are named `id_rsa' and that you have a working config file
+# your .ssh folder.
 
-for i in ${keys[@]}; do
-  echo ${i}
-  ssh-add $HOME/.ssh/${i}/id_rsa
+for i in $(find $HOME/.ssh/ -name id_rsa); do
+  echo "adding $i"
+  ssh-add $i
 done
