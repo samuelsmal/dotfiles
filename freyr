@@ -36,7 +36,7 @@ update_system () {
 
 migrate (){
   version_lock_file_name="./.version_lock"
-  newest_migration=2
+  newest_migration=3
   version_lock=0
   if [ -f "$version_lock_file_name" ]; then
     version_lock=$(<"$version_lock_file_name")
@@ -54,6 +54,10 @@ migrate (){
         echo "doing step 1->2"
         install_nordvpn
         ;;
+      "3")
+        echo "doing step 2->3"
+        fix_headphone_white_noise
+        ;;
     esac
 
     echo "done with step $step"
@@ -61,16 +65,9 @@ migrate (){
   done
 }
 
-cleanup () {
-  # Cleanup function to be used on all machines when something didn't work out as hoped.
-  echo "Cleaning up ..."
-  echo "Cleaning up ... done!"
-}
-
 setup_android_dev () {
   sudo dnf install -y android-tools
 }
-
 
 
 fix_headphone_white_noise () {
