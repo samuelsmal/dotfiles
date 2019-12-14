@@ -21,7 +21,10 @@
 ├── README.md                  # this file
 ├── .version_lock              # used for migrating
 ├── (_[A-Za-z_-]+)             # folders with this pattern are used by `freyr`
-├── freyr                      # the main setup script
+├── _freyr                     # helper scripts and utils for freyr
+│   ├── migrations             # folder containing the migration steps (must follow order)
+│   ├── migrations.sh          # this is the main migration script, check here to see how it works
+│   └── utils.sh               # utils for freyr
 ├── stow                       # stow settings (ignore file)
 └── ([A-Za-z_-]+)              # folders with this pattern are used by `stow`
 ```
@@ -39,7 +42,6 @@
 - wmctrl (to switch to already open windows)
 - keepassxc (works everywhere, and the firefox plugin is super cool)
 - conda (python)
-- your ssh config will
 
 ## TODO
 
@@ -48,11 +50,11 @@
 - add dropbox installer
 - add android studio
 - add thunderbird (fix google setup)
-- add ssh permission fix
 - checkout https://github.com/MeesCode/NordVPN-GNOME-Extention
 
 ## DONE (not all features)
 
+- migrations! if you have multiple systems and want to keep them aligned, this might help
 - find a good script which sets up the symlinks in a non stupid way
 - use dconf and dconf-editor to extract the nice gnome settings
 - create setup script (should respect hostname or tags)
