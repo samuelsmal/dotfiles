@@ -21,10 +21,10 @@ export NVM_DIR="$HOME/.local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                    # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-if [[ -d ~/.cache/android ]]; then
+if [[ -d ~/.local/android/sdk ]]; then
   # android & react native
-  export ANDROID_SDK=$HOME/.cache/android
-  export ANDROID_HOME=$HOME/.cache/android
+  export ANDROID_SDK=$HOME/.local/android/sdk/
+  export ANDROID_HOME=$HOME/.local/android/sdk/
   export PATH=$PATH:$ANDROID_HOME/tools
   export PATH=$PATH:$ANDROID_HOME/platform-tools
 fi

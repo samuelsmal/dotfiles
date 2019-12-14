@@ -6,13 +6,8 @@
 # "bestow peace and pleasure on mortals"' (From wikipedia)
 # And this script brings me pease, maybe not pleasure. A bit prosperity.
 
-check_and_remove_file () {
-  [[ -f $1 ]] && rm -f $1
-}
-
-check_and_remove_dir () {
-  [[ -d $1 ]] && rm -f $1
-}
+source $PWD/_freyr/migrations.sh
+source $PWD/_freyr/utils.sh
 
 setup_epfl_wlan () {
   bash ./epfl/wlan/_setup.sh
@@ -34,53 +29,8 @@ update_system () {
   echo "Updating system ... done!"
 }
 
-migrate (){
-  version_lock_file_name="./.version_lock"
-  newest_migration=3
-  version_lock=0
-  if [ -f "$version_lock_file_name" ]; then
-    version_lock=$(<"$version_lock_file_name")
-  fi
-  echo "version_lock: $version_lock"
-
-  for step in $(seq $((version_lock + 1)) $newest_migration); do
-    case "$step" in
-      "1")
-        echo "doing step 0->1"
-        sudo dnf remove snapd tmuxinator
-        install_flatpaks
-        ;;
-      "2")
-        echo "doing step 1->2"
-        install_nordvpn
-        ;;
-      "3")
-        echo "doing step 2->3"
-        fix_headphone_white_noise
-        add_autostart_applications
-        ;;
-    esac
-
-    echo "done with step $step"
-    echo "$step" > "$version_lock_file_name"
-  done
-}
-
 setup_android_dev () {
   sudo dnf install -y android-tools
-}
-
-fix_headphone_white_noise () {
-  # this is a fix for the stupid white noise using my dell xps laptop
-  # I got the answer from https://unix.stackexchange.com/questions/336790/how-to-disable-white-noise-with-headphones-in-dell-xps
-  echo "fixing headphone white noise ..."
-  echo "  enabling acpid service"
-  sudo systemctl enable acpid.service
-
-  echo "  copying scripts"
-  sudo cp ./_setup/headphone_white_noise_fix/headphone-plug /etc/acpi/events/
-  sudo cp ./_setup/headphone_white_noise_fix/cancel-white-noise.sh /etc/acpi/actions/
-  echo "fixing headphone white noise ... done"
 }
 
 install_ruby () {
@@ -112,27 +62,6 @@ install_games () {
   echo "installing games"
   flatpak install flathub com.play0ad.zeroad
   echo "installing games: done"
-}
-
-
-install_flatpaks () {
-  echo "Installing flatpaks..."
-  sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  flatpak install -y flathub discord
-  flatpak install -y flathub com.spotify.Client
-  flatpak install -y flathub org.signal.Signal
-  flatpak install -y flathub org.telegram.desktop
-  flatpak install -y flathub com.mattermost.Desktop
-  echo "Installing flatpaks ... done"
-}
-
-install_nordvpn () {
-  echo "Installing nordvpn ..."
-  nordvpn_version="1.0.0-1"
-  sudo wget -qnc "https://repo.nordvpn.com/yum/nordvpn/centos/noarch/Packages/n/nordvpn-release-$nordvpn_version.noarch.rpm" -P /tmp/
-  sudo dnf install -y /tmp/nordvpn-release-$nordvpn_version.noarch.rpm
-  sudo dnf install -y nordvpn
-  echo "Installing nordvpn ... done"
 }
 
 install_packages () {
@@ -194,14 +123,6 @@ setup_vim () {
   rm /tmp/dein_installer.sh
   gvim -v +"call dein#install()" +qall
   echo "Setting up vim ... done"
-}
-
-add_autostart_applications () {
-  local autostart_dir=$HOME/.config/autostart/
-  mkdir -p $autostart_dir
-  echo "adding load ssh keys to autostart"
-  [[ -e $ssh_desktop ]] && rm $ssh_desktop
-  cp $PWD/_setup/load-ssh-keys.desktop $autostart_dir
 }
 
 install_conda () {
