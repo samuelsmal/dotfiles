@@ -14,5 +14,6 @@ for cfg in $dconf_files; do
 
 
   echo "Setting $cfg_title config using $cfg"
+  #dconf reset -f $cfg_title
   dconf load $cfg_title < $cfg
 done

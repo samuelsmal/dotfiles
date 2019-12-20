@@ -45,12 +45,14 @@
 
 ## TODO
 
+- fix dconf loading, should overwrite, test with keyboard settings
+- dconf setting: how to deal with reloading the user
+- remove nordvpn
 - cleanup jupyter
 - add min install option (and add installer option)
 - add dropbox installer
 - add android studio
 - add thunderbird (fix google setup)
-- checkout https://github.com/MeesCode/NordVPN-GNOME-Extention
 
 ## DONE (not all features)
 

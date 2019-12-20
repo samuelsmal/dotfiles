@@ -23,6 +23,9 @@ disable_gnome_software () {
   sudo systemctl mask packgekit-offline-update.service
   sudo rm -rf /var/cache/PackageKit
 
+  # since the above didn't do the trick
+  sudo dnf remove gnome-software
+
   echo "disablying gnome software ... done"
 }
 

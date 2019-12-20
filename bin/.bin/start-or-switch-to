@@ -1,8 +1,17 @@
 #!/bin/bash
 
-if pgrep $1 > /dev/null
-then
-  wmctrl -a $1
+if pgrep -f "$1" > /dev/null; then
+  if [ -n "$2" ]; then
+    echo "using sec arg $2"
+    wmctrl -a $2
+  else
+    echo "using fir arg $2"
+    wmctrl -a $1
+  fi
 else
-  $1
+  if [ -n "$2" ]; then
+    $2
+  else
+    $1
+  fi
 fi
