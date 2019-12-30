@@ -60,7 +60,17 @@ install_node () {
 
 install_games () {
   echo "installing games"
-  flatpak install flathub com.play0ad.zeroad
+  #flatpak install flathub com.play0ad.zeroad
+  echo "installing steam ..."
+  if [ `hostname -s` = "abulafia" ]; then
+    sudo dnf -y install xorg-x11-drv-intel mesa-libGL.i686 mesa-dri-drivers.i686
+  else
+    sudo dnf -y install xorg-x11-drv-nouveau mesa-libGL.i686 mesa-dri-drivers.i686
+  fi
+
+  sudo dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+  sudo  dnf -y install steam
+  echo "installing steam ... done"
   echo "installing games: done"
 }
 
