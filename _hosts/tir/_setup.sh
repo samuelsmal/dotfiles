@@ -1,11 +1,7 @@
 #! /bin/bash
 
-##
+N_STEPS=1
+
 # Mouse back button
-#
-
-# Got it from here
-# https://web.archive.org/web/20160604141354/http://forums.logitech.com/t5/Mice-and-Pointing-Devices/Guide-for-setup-Performance-MX-mouse-on-Linux-with-KDE/td-p/517167
-sudo dnf install --yes xbindkeys
-
-ln -s $PWD/xbindkeysrc $HOME/.xbindkeysrc
+echo "(1/$N_STEPS) appyling mouse back button fix"
+bash ../_system-fixes/logitech_mouse_back_btn/_setup.sh

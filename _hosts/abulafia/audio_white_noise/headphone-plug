@@ -1,2 +1,0 @@
-event=jack/headphone HEADPHONE plug
-action=/etc/acpi/cancel-white-noise.sh %e

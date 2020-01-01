@@ -4,10 +4,26 @@
 # 'is a widely attested god associated with sacral kingship, virility and prosperity, with sunshine
 # and fair weather, and pictured as a phallic fertility god in Norse mythology. Freyr is said to
 # "bestow peace and pleasure on mortals"' (From wikipedia)
-# And this script brings me pease, maybe not pleasure. A bit prosperity.
+# And this script brings me peace, maybe not pleasure. A bit prosperity.
 
-source $PWD/_freyr/migrations.sh
-source $PWD/_freyr/utils.sh
+set -a
+FREYR_DIR=`dirname "$0"`
+set +a
+
+bash $FREYR_DIR/_freyr/migrations.sh
+bash $FREYR_DIR/_freyr/utils.sh
+
+help_message () {
+  echo "Usage: freyr [COMMAND]"
+  echo "bash script to set up the system by installing programs, "
+  echo "setting up services, fixing issues, applying configurations..."
+  echo ""
+  echo " --help                    Display this message"
+  echo " -u, --update              Update system (using package manager)"
+  echo " --hostname <new hostname> Only real option, if present, it will be the new hostname"
+  echo " -m,  --migrate            Execute migrations"
+  echo " -s, --setup               Setup system (links dotfiles, install packages, ...)"
+}
 
 setup_epfl_wlan () {
   bash ./epfl/wlan/_setup.sh
@@ -21,6 +37,12 @@ setup_tir () {
   echo "Setting up tir ..."
   bash ./_hosts/tir/_setup.sh
   echo "Setting up tir ... done!"
+}
+
+setup_abulafia () {
+  echo "Setting up abulafia ..."
+  bash ./_hosts/abulafia/_setup.sh
+  echo "Setting up abulafia ... done!"
 }
 
 update_system () {
@@ -79,14 +101,13 @@ install_packages () {
   # wmctrl for launching and switching to applications, used by user defined (you, the reader) gnome-shortcuts
 
   sudo dnf copr enable -y daniruiz/flat-remix
-  sudo dnf copr enable -y dgoerger/workstation
   sudo dnf copr enable -y user501254/Arc
 
   sudo dnf install -y dnf-plugins-core \
     llvm lldb clang \
     vim gvim the_silver_searcher git zsh powerline \
     tmux tmux-powerline \
-    keepassx xclip \
+    keepassxc xclip \
     curl wget \
     zotero calibre \
     wmctrl \
@@ -111,9 +132,7 @@ install_packages () {
   sudo dnf -y groupinstall "C Development Tools and Libraries"
   sudo dnf -y groupinstall "Development Tools"
 
-  install_flatpaks
   install_node
-  install_nordvpn
   install_ruby
 
   echo "Installing packages ... done!"
@@ -214,14 +233,6 @@ _setup () {
   echo "Starting setup ... done"
 }
 
-help_message () {
-  echo "freyr - bash script to set up the system"
-  echo "Usage:"
-  echo "    ./freyr --help                        Display this message"
-  echo "    ./freyr -u --update                   Update system"
-  echo "    ./freyr --hostname <new hostname>     Setup system (links dotfiles, install packages, ...)"
-}
-
 # got this setup from:
 # - https://gist.github.com/magnetikonline/22c1eb412daa350eeceee76c97519da8
 # - https://gist.github.com/cosimo/3760587
@@ -277,6 +288,11 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ $# -eq 0 ]]; then
+  help_message
+  exit 0
+fi
 
 if [ "$setup_system" = true ]; then
   _setup

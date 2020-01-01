@@ -1,9 +1,7 @@
+#! /bin/bash
 
-# remove the shitty white noise while connecting headphones
-sudo dnf install acpid
-sudo systemctl enable acpid.service
+N_STEPS=1
 
-sudo mv ./audio_white_noise/headphone-plug /etc/acpi/events
-sudo mv ./audio_white_noise/cancel-white-noise.sh /etc/acpi/actions
-
-sudo systemctl restart acpid.service
+# headphone audio fix
+echo "(1/$N_STEPS) applying headphone fix"
+bash ../_system-fixes/headphone_white_noise_fix/_setup.sh

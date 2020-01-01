@@ -29,3 +29,7 @@ alias asci='source activate sci'
 
 alias todo='vim ~/Dropbox/Notes/planning/todo.txt'
 alias notes='cd ~/Dropbox/Notes/ && vim'
+
+alias ssh_alarm='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.87'
+
+alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.72'
