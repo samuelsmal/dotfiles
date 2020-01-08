@@ -9,6 +9,10 @@ install_scrcpy() {
   cd -
 }
 
+setup_latex() {
+  sudo dnf install latexmk texlive-pdfpages texlive-todo texlive-biblatex biber texlive-scheme-minimal
+}
+
 migration_step_4() {
   # super nice way to connect the android to the pc
   install_scrcpy
@@ -23,4 +27,8 @@ migration_step_4() {
   # no longer in use
   sudo dnf copr disable -y dgoerger/workstation
   sudo dnf copr remove -y dgoerger/workstation
+
+  sudo dnf install docker
+
+  setup_latex
 }

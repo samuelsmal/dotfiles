@@ -33,3 +33,6 @@ alias notes='cd ~/Dropbox/Notes/ && vim'
 alias ssh_alarm='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.87'
 
 alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.72'
+
+# objeng
+alias oe_clock='~/.local/opt/proclock4sam/Proclock/bin/start.sh'

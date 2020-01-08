@@ -118,6 +118,7 @@ install_packages () {
     vlc \
     thunderbird \
     stow \
+    docker \
     mozilla-fira-mono-fonts flat-remix arc-theme levien-inconsolata-fonts
 
   echo "Installing gnome specific stuff ..."
