@@ -48,7 +48,9 @@
   excludesfile = ~/.gitignore_global
   editor = vim
 [merge]
-  tool = fugitive
+  tool = meld
+[mergetool "meld"]
+  cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [mergetool "fugitive"]
   cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
 [diff "jupyternotebook"]
