@@ -365,5 +365,23 @@ function! AutoHighlightToggle()
   endif
 endfunction
 
+" XML
+augroup XML
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+
+
+function XMLFormat()
+  %!xmllint --format %
+endfunction
+
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
+
+" XML End
+
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set runtimepath^=~/.vim/bundle/ctrlp.vim

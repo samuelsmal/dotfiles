@@ -48,6 +48,7 @@ setup_abulafia () {
 update_system () {
   echo "Updating system ..."
   sudo dnf -y update
+  sudo flatpak update -y
   echo "Updating system ... done!"
 }
 
@@ -286,7 +287,6 @@ while [[ $# -gt 0 ]]; do
       help_message
       shift
       exit 0
-      ;;
   esac
 done
 
