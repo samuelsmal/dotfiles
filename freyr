@@ -231,6 +231,7 @@ _setup () {
   copy_thunderbird_settings
   apply_firefox_user_chrome
   setup_ssh
+  bash $FREYR_DIR/_tiddlywiki/_setup.sh
   # disable_gnome_software
   echo "Starting setup ... done"
 }
