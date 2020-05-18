@@ -120,7 +120,8 @@ install_packages () {
     thunderbird \
     stow \
     docker \
-    mozilla-fira-mono-fonts flat-remix arc-theme levien-inconsolata-fonts
+    mozilla-fira-mono-fonts flat-remix arc-theme levien-inconsolata-fonts \
+    git-lfs
 
   echo "Installing gnome specific stuff ..."
   sudo dnf install -y gnome-shell-extension-pomodoro \
