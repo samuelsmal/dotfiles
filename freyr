@@ -138,6 +138,8 @@ install_packages () {
   install_node
   install_ruby
 
+  bash _protonmail/_setup.sh
+
   echo "Installing packages ... done!"
 }
 
