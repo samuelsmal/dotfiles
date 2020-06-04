@@ -9,7 +9,7 @@ sudo rpm --import "$HOME/Downloads/bridge_pubkey.gpg"
 SUCCESSFULL_RETURN_STR="$HOME/Downloads/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm: digests signatures OK"
 
 if [[ `rpm --checksig "$HOME/Downloads/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm"` == "$SUCCESSFULL_RETURN_STR" ]]; then
-  #sudo dnf install -y ~/Downloads/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm
+  sudo dnf install -y ~/Downloads/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm
   rm $HOME/Downloads/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm
   rm $HOME/Downloads/bridge_pubkey.gpg
   echo "protonmail bridge successfully installed, now configure it, go there: https://protonmail.com/bridge/thunderbird#1"
