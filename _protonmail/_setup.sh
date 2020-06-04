@@ -1,9 +1,10 @@
 #! /bin/bash
 
 BRIDGE_VERSION="1.2.7-1"
+
 wget https://protonmail.com/download/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm -P ~/Downloads
 wget https://protonmail.com/download/bridge_pubkey.gpg -P ~/Downloads
-sudo rpm --import bridge_pubkey.gpg
+sudo rpm --import "$HOME/Downloads/bridge_pubkey.gpg"
 
 SUCCESSFULL_RETURN_STR="$HOME/Downloads/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm: digests signatures OK"
 

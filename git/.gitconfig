@@ -21,7 +21,7 @@
   yolo = "!f() { git commit -m \"$(curl -s whatthecommit.com/index.txt)\"; }; f"
 [user]
   name = Samuel von Baussnern
-  email = samuel.vonbaussnern@gmail.com
+  email = savoba@protonmail.ch
 [color]
   branch = auto
   diff = auto
