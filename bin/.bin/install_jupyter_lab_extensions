@@ -1,3 +1,4 @@
 #!/bin/bash
 
+conda install -c conda-forge jupyter_nbextensions_configurator
 jupyter labextension install jupyterlab_vim
