@@ -1,4 +1,8 @@
 #!/bin/bash
 
 conda install -c conda-forge jupyter_nbextensions_configurator
-jupyter labextension install jupyterlab_vim
+# jupyter labextension install jupyterlab_vim
+
+echo "warning: since jupyterlab_vim does not support jupyterlab 2.0 a forked version is installed, check this again"
+
+jupyter labextension install @axlair/jupyterlab_vim

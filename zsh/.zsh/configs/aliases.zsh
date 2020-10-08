@@ -31,10 +31,15 @@ alias todo='vim ~/Dropbox/Notes/planning/todo.txt'
 alias notes='cd ~/Dropbox/Notes/ && vim'
 
 alias ssh_alarm='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.87'
-alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.1.61'
+alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.0.250'
 
 # objeng
 alias oe_clock='~/.local/opt/proclock4sam/Proclock/bin/start.sh'
 
 # cool shit
 alias please='sudo $(fc -ln -1)'
+
+# merantix
+alias k='kubectl'
+alias gcl='gcloud'
+alias mx_prj_setup='gcl config set project merantix-autosec && gcloud container clusters get-credentials merantix-autosec-gke --zone=europe-west1'
