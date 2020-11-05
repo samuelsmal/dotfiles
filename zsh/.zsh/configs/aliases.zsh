@@ -31,13 +31,14 @@ alias todo='vim ~/Dropbox/Notes/planning/todo.txt'
 alias notes='cd ~/Dropbox/Notes/ && vim'
 
 alias ssh_alarm='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.87'
-alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.0.250'
+alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.1.5'
 
 # objeng
 alias oe_clock='~/.local/opt/proclock4sam/Proclock/bin/start.sh'
 
 # cool shit
 alias please='sudo $(fc -ln -1)'
+alias einkaufsliste='vim ~/Dropbox/ssshared/einkaufsliste.md'
 
 # merantix
 alias k='kubectl'

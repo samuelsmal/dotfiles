@@ -104,13 +104,15 @@ install_packages () {
   sudo dnf copr enable -y daniruiz/flat-remix
   sudo dnf copr enable -y user501254/Arc
 
+  sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+
   sudo dnf install -y dnf-plugins-core \
     llvm lldb clang \
     vim gvim the_silver_searcher git zsh powerline \
     tmux tmux-powerline \
     keepassxc xclip \
     curl wget \
-    zotero calibre \
+    calibre \
     wmctrl \
     gstreamer-plugins-base gstreamer1-plugins-base gstreamer-plugins-bad gstreamer-plugins-ugly \
     gstreamer1-plugins-ugly gstreamer-plugins-good-extras gstreamer1-plugins-good-extras \
@@ -121,15 +123,25 @@ install_packages () {
     stow \
     docker \
     mozilla-fira-mono-fonts flat-remix arc-theme levien-inconsolata-fonts \
-    git-lfs
+    git-lfs gh
 
   echo "Installing gnome specific stuff ..."
-  sudo dnf install -y gnome-shell-extension-pomodoro \
-                      gnome-shell-extension-media-player-indicator \
+  sudo dnf install -y gnome-shell-extension-apps-menu \
+                      gnome-shell-extension-background-logo \
+                      gnome-shell-extension-common \
                       gnome-shell-extension-do-not-disturb-button \
+                      gnome-shell-extension-freon \
+                      gnome-shell-extension-horizontal-workspaces \
+                      gnome-shell-extension-launch-new-instance \
+                      gnome-shell-extension-media-player-indicator \
+                      gnome-shell-extension-places-menu \
+                      gnome-shell-extension-pomodoro \
                       gnome-shell-extension-topicons-plus \
-                      gnome-shell-extension-freon
+                      gnome-shell-extension-user-theme \
+                      gnome-shell-extension-window-list
+
   gnome-shell-extension-installer 277 # impatience
+
   echo "Installing gnome specific stuff ... done"
 
   sudo dnf -y groupinstall "C Development Tools and Libraries"
