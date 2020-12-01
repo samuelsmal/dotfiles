@@ -55,7 +55,15 @@ if [ -f '/home/sam/.local/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sa
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/sam/.local/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sam/.local/opt/google-cloud-sdk/completion.zsh.inc'; fi
 
-source /home/sam/.mx-complete.sh
+if [ -f '/home/sam/.mx-complete.sh' ]; then
+  . /home/sam/.mx-complete.sh
+else
+  echo "could not find mx-complete"
+fi
 
 # merantix core setup
-source $HOME/proj/merantix/core/developer_env/setup.sh AUTOSEC
+if [ -f $HOME/proj/merantix/core/developer_env/setup.sh ]; then
+  . $HOME/proj/merantix/core/developer_env/setup.sh AUTOSEC
+else
+  echo "could not find merantix core setup"
+fi
