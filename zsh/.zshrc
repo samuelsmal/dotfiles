@@ -1,5 +1,5 @@
-setopt autocd extendedglob nomatch complete_aliases
-#
+setopt autocd extendedglob nomatch
+
 # see https://github.com/sindresorhus/pure for more information
 fpath=(~/.zsh/zsh_pure_prompt $fpath)
 
@@ -45,6 +45,10 @@ fi
 # <<< conda initialize <<<
 source "/home/sam/.local/opt/miniconda3/etc/profile.d/conda.sh"
 
+#
+# merantix
+#
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/sam/.local/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sam/.local/opt/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -52,3 +56,6 @@ if [ -f '/home/sam/.local/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sa
 if [ -f '/home/sam/.local/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sam/.local/opt/google-cloud-sdk/completion.zsh.inc'; fi
 
 source /home/sam/.mx-complete.sh
+
+# merantix core setup
+source $HOME/proj/merantix/core/developer_env/setup.sh AUTOSEC

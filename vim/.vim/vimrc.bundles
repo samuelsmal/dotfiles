@@ -55,7 +55,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('tpope/vim-fireplace')
 
   " Python
-  call dein#add('psf/black')
+  " call dein#add('psf/black')
 
   call dein#add('tpope/vim-ragtag')
   " Ctags
