@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # version number + '-1'
-BRIDGE_VERSION="1.5.2-1"
+BRIDGE_VERSION="1.5.4-1"
 
 wget https://protonmail.com/download/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm -P ~/Downloads
 
