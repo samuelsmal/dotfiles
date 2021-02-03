@@ -13,9 +13,6 @@ done
 
 export SSH_AUTH_SOCK="/tmp/ssh-agent.socket"
 
-[[ -f ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 export NVM_DIR="$HOME/.local/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                    # This loads nvm
@@ -67,3 +64,7 @@ if [ -f $HOME/proj/merantix/core/developer_env/setup.sh ]; then
 else
   echo "could not find merantix core setup"
 fi
+
+[[ -f ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

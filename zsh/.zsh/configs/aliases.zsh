@@ -25,22 +25,18 @@ alias o='xdg-open'
 alias yc='pwd | xclip -selection clipboard'
 alias y='xclip -selection clipboard'
 
-alias asci='source activate sci'
-
-alias todo='vim ~/Dropbox/Notes/planning/todo.txt'
-alias notes='cd ~/Dropbox/Notes/ && vim'
-
 alias ssh_alarm='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.87'
 alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.1.5'
 
-# objeng
-alias oe_clock='~/.local/opt/proclock4sam/Proclock/bin/start.sh'
-
 # cool shit
 alias please='sudo $(fc -ln -1)'
-alias einkaufsliste='vim ~/Dropbox/ssshared/einkaufsliste.md'
 
 # merantix
 alias k='kubectl'
 alias gcl='gcloud'
 alias mx_prj_setup='gcl config set project merantix-autosec && gcloud container clusters get-credentials merantix-autosec-gke --zone=europe-west1'
+
+# tmuxinator
+alias tm='tmuxinator'
+alias tmc='tmuxinator start master_thesis_code'
+alias tmr='tmuxinator start master_thesis_report'
