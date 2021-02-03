@@ -333,7 +333,7 @@ else
   "  \ }
 endif
 
-let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
+" let g:ycm_path_to_python_interpreter = '/usr/bin/python3'
 
 " ultisnips
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.

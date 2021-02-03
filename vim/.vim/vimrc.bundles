@@ -67,16 +67,19 @@ if dein#load_state('~/.cache/dein')
   " call dein#add( 'cwoac/nvim'
 
   " Snippets
-  " call dein#add( 'SirVer/ultisnips'
+  call dein#add('SirVer/ultisnips')
 
   " Snippets are separated from the engine. Add this if you want them:
-  " call dein#add( 'honza/vim-snippets'
+  call dein#add('honza/vim-snippets')
 
   " Haskell
   " call dein#add( 'bitc/vim-hdevtools'
 
   " todo txt
-  call dein#add('dbeniamine/todo.txt-vim')
+  " call dein#add('dbeniamine/todo.txt-vim')
+
+  " latex
+  call dein#add('lervag/vimtex')
 
   call dein#end()
   call dein#save_state()
