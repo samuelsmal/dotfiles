@@ -1,0 +1,51 @@
+#!/bin/bash
+
+lazy_start(){
+  if wmctrl -xl | grep "$1" --ignore-case -q; then
+    echo "$1 already running..."
+  else
+    # move to background and ignore all messages
+    echo "starting $1"
+    echo "$2"
+    $2 > /dev/null 2>&1 &
+  fi
+}
+
+# starting programs
+
+lazy_start firefox firefox
+lazy_start thunderbird
+lazy_start keepassxc
+lazy_start pycharm /home/sam/.local/opt/pycharm-professional-2020.2.3/pycharm-2020.2.3/bin/pycharm.sh
+lazy_start gnome-terminal gnome-terminal
+lazy_start slack "flatpak run com.slack.Slack"
+lazy_start spotify "flatpak run com.spotify.Client"
+lazy_start toggl "flatpak run com.toggl.TogglDesktop"
+lazy_start signal "flatpak run org.signal.Signal"
+lazy_start telegram "flatpak run org.telegram.desktop"
+lazy_start obsidian obsidian
+
+# wait a bit
+
+sleep 5
+
+# moving programs
+
+# create 3 desktops
+wmctrl -n 4
+
+wmctrl -xr firefox -t 0
+wmctrl -xr toggl -t 0
+wmctrl -xr terminal -t 0
+wmctrl -xr obsidian -t 0
+
+wmctrl -xr slack -t 1
+wmctrl -xr thunderbird -t 1
+wmctrl -xr signal -t 1
+wmctrl -xr telegram -t 1
+
+wmctrl -xr spotify -t 2
+
+# focus
+wmctrl -xa toggl
+
