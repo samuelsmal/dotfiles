@@ -14,8 +14,8 @@ lazy_start(){
 # starting programs
 
 lazy_start firefox firefox
-lazy_start thunderbird
-lazy_start keepassxc
+lazy_start thunderbird thunderbird
+lazy_start keepassxc keepassxc
 lazy_start pycharm /home/sam/.local/opt/pycharm-professional-2020.2.3/pycharm-2020.2.3/bin/pycharm.sh
 lazy_start gnome-terminal gnome-terminal
 lazy_start slack "flatpak run com.slack.Slack"
