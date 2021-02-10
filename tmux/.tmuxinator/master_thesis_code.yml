@@ -52,6 +52,7 @@ windows:
       # synchronize: after
       panes:
         - g
+        - watch -n 2 nvidia-smi
         - jupyter-lab --no-browser
         - tensorboard --logdir ~/merantix_data/training_logs
 
