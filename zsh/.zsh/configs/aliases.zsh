@@ -26,7 +26,7 @@ alias yc='pwd | xclip -selection clipboard'
 alias y='xclip -selection clipboard'
 
 alias ssh_alarm='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.178.87'
-alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.1.5'
+alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -o PubkeyAuthentication=no  pi@192.168.1.2'
 
 # cool shit
 alias please='sudo $(fc -ln -1)'
