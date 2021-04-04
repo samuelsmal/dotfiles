@@ -42,28 +42,6 @@ fi
 # <<< conda initialize <<<
 source "/home/sam/.local/opt/miniconda3/etc/profile.d/conda.sh"
 
-#
-# merantix
-#
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/sam/.local/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sam/.local/opt/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/sam/.local/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sam/.local/opt/google-cloud-sdk/completion.zsh.inc'; fi
-
-if [ -f '/home/sam/.mx-complete.sh' ]; then
-  . /home/sam/.mx-complete.sh
-else
-  echo "could not find mx-complete"
-fi
-
-# merantix core setup
-if [ -f $HOME/proj/merantix/core/developer_env/setup.sh ]; then
-  . $HOME/proj/merantix/core/developer_env/setup.sh AUTOSEC
-else
-  echo "could not find merantix core setup"
-fi
 
 [[ -f ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
