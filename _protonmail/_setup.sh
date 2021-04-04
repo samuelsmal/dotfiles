@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # version number + '-1'
-BRIDGE_VERSION="1.5.7-1"
+BRIDGE_VERSION="1.6.9-1"
 
-wget https://protonmail.com/download/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm -P ~/Downloads
+wget https://protonmail.com/download/bridge/protonmail-bridge-$BRIDGE_VERSION.x86_64.rpm -P ~/Downloads
 
 if ! rpm  -qi gpg-pubkey-\* | grep protonmail > /dev/null 2>&1; then
   echo "key not installed, downloading and installing bridge pubkey"
