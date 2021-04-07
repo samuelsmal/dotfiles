@@ -168,6 +168,7 @@ endfunction
 
 " Turns on spell check for certain files
 autocmd FileType latex,markdown setlocal spell spelllang=en_gb
+autocmd BufRead,BufNewFile *.tex setlocal spell spelllang=en_gb
 set spellsuggest=best,10
 
 " highlight the status bar when in insert mode
