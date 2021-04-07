@@ -4,3 +4,4 @@
 .version_lock
 vim/.vim/black
 zsh/.zsh/cache
+**/*.spl

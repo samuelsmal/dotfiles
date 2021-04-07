@@ -386,3 +386,12 @@ au FileType xml setlocal foldmethod=syntax
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+
+" Regenerating the spell files if necessary
+" taken from: https://vi.stackexchange.com/a/5052
+for d in glob('~/.vim/spell/*.add', 1, 1)
+    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+        exec 'mkspell! ' . fnameescape(d)
+    endif
+endfor
