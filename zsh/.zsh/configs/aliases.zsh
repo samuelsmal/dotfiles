@@ -40,3 +40,15 @@ alias mx_prj_setup='gcl config set project merantix-autosec && gcloud container 
 alias tm='tmuxinator'
 alias tmc='tmuxinator start master_thesis_code'
 alias tmr='tmuxinator start master_thesis_report'
+
+# docker
+alias d="docker"
+alias d_a="docker attach"
+alias d_m="docker rm"
+alias d_lc="docker ps"
+alias d_li="docker images"
+alias d_rm_all_containers='docker rm $(docker ps -a -q)'
+alias d_rm_all_images='docker rmi $(docker images -q)'
+alias d_rm_all_images_ALL='docker rmi $(docker images -q -a)'
+alias d_rm_untagged_images='docker rmi $(docker images -a | grep "^<none>" | awk '{print $3}')'
+alias d_stop_all='docker stop $(docker ps -a -q)'
