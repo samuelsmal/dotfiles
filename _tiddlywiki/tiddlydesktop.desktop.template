@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=tiddlydesktop
-Comment=TiddlyWikiDesktop, personal wiki
-Version=_VERSION_
-Exec=/home/sam/.local/opt/tiddlydesktop/TiddlyDesktop-linux64-v_VERSION_/nw
-Icon=/home/sam/.local/opt/tiddlydesktop/TiddlyDesktop-linux64-v_VERSION_/images/app-icon.png
-Terminal=false
-Type=Application
-Categories=Notes;

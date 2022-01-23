@@ -104,8 +104,6 @@ install_packages () {
   sudo dnf copr enable -y daniruiz/flat-remix
   sudo dnf copr enable -y user501254/Arc
 
-  sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
-
   sudo dnf install -y dnf-plugins-core \
     llvm lldb clang \
     vim gvim the_silver_searcher git zsh powerline \
@@ -246,7 +244,6 @@ _setup () {
   copy_thunderbird_settings
   apply_firefox_user_chrome
   setup_ssh
-  bash $FREYR_DIR/_tiddlywiki/_setup.sh
   # disable_gnome_software
   echo "Starting setup ... done"
 }
