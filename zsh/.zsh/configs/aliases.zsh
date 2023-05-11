@@ -31,24 +31,23 @@ alias ssh_media='ssh -o PreferredAuthentications=keyboard-interactive,password -
 # cool shit
 alias please='sudo $(fc -ln -1)'
 
-# merantix
-alias k='kubectl'
-alias gcl='gcloud'
-alias mx_prj_setup='gcl config set project merantix-autosec && gcloud container clusters get-credentials merantix-autosec-gke --zone=europe-west1'
-
 # tmuxinator
 alias tm='tmuxinator'
 alias tmc='tmuxinator start master_thesis_code'
 alias tmr='tmuxinator start master_thesis_report'
 
-# docker
-alias d="docker"
-alias d_a="docker attach"
-alias d_m="docker rm"
-alias d_lc="docker ps"
-alias d_li="docker images"
-alias d_rm_all_containers='docker rm $(docker ps -a -q)'
-alias d_rm_all_images='docker rmi $(docker images -q)'
-alias d_rm_all_images_ALL='docker rmi $(docker images -q -a)'
-alias d_rm_untagged_images='docker rmi $(docker images -a | grep "^<none>" | awk '{print $3}')'
-alias d_stop_all='docker stop $(docker ps -a -q)'
+# containers & cloud
+alias d="podman"
+alias d_a="podman attach"
+alias d_m="podman rm"
+alias d_lc="podman ps"
+alias d_li="podman images"
+alias d_rm_all_containers='podman rm $(podman ps -a -q)'
+alias d_rm_all_images='podman rmi $(podman images -q)'
+alias d_rm_all_images_ALL='podman rmi $(podman images -q -a)'
+alias d_rm_untagged_images='podman rmi $(podman images -a | grep "^<none>" | awk '{print $3}')'
+alias d_stop_all='podman stop $(podman ps -a -q)'
+
+alias k='kubectl'
+
+alias m="minikube"

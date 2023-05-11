@@ -8,3 +8,6 @@ export PATH="/opt:$PATH"
 export PATH="$HOME/.local/opt/miniconda3/bin/:$PATH"
 
 export PATH="$HOME/.local/bin/:$HOME/.local/lib/node_modules/:$PATH"
+
+export PATH="$HOME/.local/opt/context-linux-64/tex/texmf-linux-64/bin:$PATH"
+
