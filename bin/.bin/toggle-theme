@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Toggle between dark and light color schemes across iTerm2, tmux, and neovim.
+# Usage: toggle-theme [dark|light]
+
+set -euo pipefail
+
+STATE_FILE="$HOME/.theme-mode"
+
+# Read current mode
+current="dark"
+[[ -f "$STATE_FILE" ]] && current=$(<"$STATE_FILE")
+
+# Determine target mode
+if [[ $# -ge 1 ]]; then
+  target="$1"
+else
+  [[ "$current" == "dark" ]] && target="light" || target="dark"
+fi
+
+if [[ "$target" != "dark" && "$target" != "light" ]]; then
+  echo "Usage: toggle-theme [dark|light]" >&2
+  exit 1
+fi
+
+# Persist state
+echo "$target" > "$STATE_FILE"
+
+# --- iTerm2: switch profile via proprietary escape sequence ---
+profile="Solarized Dark"
+[[ "$target" == "light" ]] && profile="Solarized Light"
+
+if [[ -n "${TMUX:-}" ]]; then
+  # Write directly to each tmux client's real terminal (bypasses tmux entirely)
+  for client_tty in $(tmux list-clients -F '#{client_tty}'); do
+    printf '\e]1337;SetProfile=%s\a' "$profile" > "$client_tty" 2>/dev/null || true
+  done
+elif [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+  printf '\e]1337;SetProfile=%s\a' "$profile"
+fi
+
+# --- tmux: source the appropriate theme (global, applies to all sessions) ---
+if [[ -n "${TMUX:-}" ]]; then
+  tmux source-file "$HOME/.tmux/themes/${target}.conf"
+fi
+
+# --- neovim: signal all instances via FocusGained ---
+# Neovim watches ~/.theme-mode on FocusGained events.
+# Send focus events directly to each pane without switching the active pane.
+if [[ -n "${TMUX:-}" ]]; then
+  for pane_tty in $(tmux list-panes -a -F '#{pane_tty}'); do
+    printf '\e[I' > "$pane_tty" 2>/dev/null || true
+  done
+fi
+
+echo "Theme switched to: $target"
