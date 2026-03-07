@@ -1,7 +1,9 @@
-setopt autocd extendedglob nomatch
+fpath=( "$HOME/.zsh/prompt" $fpath )
 
-# see https://github.com/sindresorhus/pure for more information
-fpath=(~/.zsh/zsh_pure_prompt $fpath)
+autoload -U promptinit; promptinit
+prompt pure
+
+fpath+=~/.zsh/completions/_poetry
 
 for cfg in ~/.zsh/configs/*.zsh; do
   source $cfg
@@ -11,38 +13,41 @@ for function in ~/.zsh/functions/[^\.]*; do
   source $function
 done
 
-export SSH_AUTH_SOCK="/tmp/ssh-agent.socket"
-
-
-export NVM_DIR="$HOME/.local/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"                    # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-if [[ -d ~/.local/android/sdk ]]; then
-  # android & react native
-  export ANDROID_SDK=$HOME/.local/android/sdk/
-  export ANDROID_HOME=$HOME/.local/android/sdk/
-  export PATH=$PATH:$ANDROID_HOME/tools
-  export PATH=$PATH:$ANDROID_HOME/platform-tools
-fi
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-#__conda_setup="$('/home/sam/.local/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#    eval "$__conda_setup"
-#else
-#    if [ -f "/home/sam/.local/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-#        source "/home/sam/.local/opt/miniconda3/etc/profile.d/conda.sh"
-#    else
-#        export PATH="/home/sam/.local/opt/miniconda3/bin:$PATH"
-#    fi
-#fi
-#unset __conda_setup
+__conda_setup="$('/Users/SamuelvonBaussnern/.local/opt/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/SamuelvonBaussnern/.local/opt/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/SamuelvonBaussnern/.local/opt/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/SamuelvonBaussnern/.local/opt/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
 # <<< conda initialize <<<
-source "/home/sam/.local/opt/miniconda3/etc/profile.d/conda.sh"
 
+source $HOME/.local/bin/fdh_tooling_completions.bash
 
-[[ -f ~/.rvm/scripts/rvm ]] && source ~/.rvm/scripts/rvm
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.1.2
+
+source $HOME/.local/bin/done_pa_completions.bash
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/SamuelvonBaussnern/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/SamuelvonBaussnern/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/SamuelvonBaussnern/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/SamuelvonBaussnern/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# pnpm
+export PNPM_HOME="/Users/SamuelvonBaussnern/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+. "$HOME/.cargo/env"

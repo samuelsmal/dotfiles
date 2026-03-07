@@ -1,3 +1,28 @@
+# Generated ctag file
+ctags/ctags.config.gen
+
+# Compiled python files
+*.pyc
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+$RECYCLE.BIN/
+.Spotlight-V100
+.Trashes
+
+# VI Swaps
+*.swp
+
+# Git stuff
+*.orig
+
 *.sublime-project
 *.sublime-workspace
 .idea

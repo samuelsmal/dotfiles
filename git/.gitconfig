@@ -1,3 +1,34 @@
+# This is Git's per-user configuration file.
+[column]
+        ui = auto
+[branch]
+        sort = -committerdate
+[tag]
+        sort = version:refname
+[diff]
+        algorithm = histogram
+        colorMoved = plain
+        mnemonicPrefix = true
+        renames = true
+[fetch]
+        prune = true
+        pruneTags = true
+        all = true
+[help]
+        autocorrect = prompt
+[commit]
+        verbose = true
+[rerere]
+        enabled = true
+        autoupdate = true
+[rebase]
+        autoSquash = true
+        autoStash = true
+        updateRefs = true
+
+[user]
+  name = Samuel von Baussnern
+  email = samuel.vonbaussnern@d-one.ai
 [alias]
   undo=reset --hard
   new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
@@ -18,10 +49,7 @@
   tree = log --oneline --decorate --all --graph
   prune = fetch origin --prune
   alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
-  yolo = "!f() { git commit -m \"$(curl -s whatthecommit.com/index.txt)\"; }; f"
-[user]
-  name = Samuel von Baussnern
-  email = savoba@protonmail.ch
+  yolo = "!f() { git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"; }; f"
 [color]
   branch = auto
   diff = auto
@@ -41,33 +69,38 @@
   changed = green
   untracked = cyan
 [push]
-  default = upstream
+  default = simple
+  followTags = true
+  autoSetupRemote = true
 [pull]
   default = current
 [core]
   excludesfile = ~/.gitignore_global
   editor = vim
 [merge]
+  # conflictstyle = zdiff3
   tool = meld
 [mergetool "meld"]
   cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [mergetool "fugitive"]
   cmd = vim -f -c \"Gvdiff\" \"$MERGED\"
 [diff "jupyternotebook"]
-	command = git-nbdiffdriver diff
+  command = git-nbdiffdriver diff
 [merge "jupyternotebook"]
-	driver = git-nbmergedriver merge %O %A %B %L %P
-	name = jupyter notebook merge driver
+  driver = git-nbmergedriver merge %O %A %B %L %P
+  name = jupyter notebook merge driver
 [difftool "nbdime"]
-	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+  cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
 [difftool]
-	prompt = false
+  prompt = false
 [mergetool "nbdime"]
-	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+  cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
-	prompt = false
+  prompt = false
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[init]
+  defaultBranch = main

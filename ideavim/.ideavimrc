@@ -1,33 +1,60 @@
-set history=50 " number of command-lines that are remembered
-set hlsearch " highlight matches with last search pattern
-set ignorecase " ignore case in search patterns
-set showmode " message on status line to show current mode
-set smartcase " no ignore case when pattern has uppercase
-
-" disable bell
 set visualbell
 set noerrorbells
-
-
-" Switch tabs
-" nnoremap <C-n> gt
-" nnoremap <C-p> gT
-
-" Split windows
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
-" nnoremap <C-c> <C-w>c
-
-"set space as leader
-let mapleader = "\<Space>"
-
-"Type <Space>w to save file (a lot faster than :w<Enter>):
-nnoremap <Leader>w :w
-
-" Emulate vim-surround
-set surround
-
-set clipboard+=unnamedplus
 set ideajoin
+
+""" navigation
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+sethandler <C-A> a:vim
+sethandler <C-H> a:vim
+sethandler <C-J> a:vim
+sethandler <C-K> a:vim
+sethandler <C-L> a:vim
+sethandler <C-N> a:vim
+sethandler <C-P> a:vim
+sethandler <C-R> a:vim
+sethandler <C-T> a:vim
+sethandler <C-V> a:vim
+
+nmap <C-o> :action Back<CR>
+
+let mapleader=" "
+
+set ideajoin
+set idearefactormode=keep
+
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+
+nnoremap <leader>c :action CommentByLineComment<CR>
+nnoremap <leader>r :action Refactorings.QuickListPopupAction<CR>
+nmap <leader>o <Action>(OptimizeImports)<Action>(ReformatCode)<CR>
+
+inoremap <c-n> <C-o>:action CodeCompletion<CR>
+
+nnoremap <c-r> :action RecentFiles<CR>
+nnoremap <leader>l :action RecentLocations<CR>
+nnoremap <leader>h  :action LocalHistory.ShowHistory<CR>
+nnoremap ge :action GotoNextError<CR>
+nnoremap gE :action GotoPreviousError<CR>
+
+""" running stuff
+nnoremap ,r :action ContextRun<CR>
+nnoremap ,c :action RunClass<CR>
+nnoremap ,f :action ChooseRunConfiguration<CR>
+nnoremap ,t :action ActivateRunToolWindow<CR>
+nnoremap ,u :action Rerun<CR>
+nnoremap ,f :action RerunFailedTests<CR>

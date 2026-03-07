@@ -5,4 +5,5 @@ setopt glob_dots        # include dotfiles in globbing
 setopt print_exit_value # print return value if non-zero
 unsetopt beep notify    # no beep
 
-print -Pn "\e]0; %n@%M: %~\a" # terminal title
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+export HOMEBREW_INCLUDE_PATHS=$HOMEBREW_INCLUDE_PATHS:/usr/local/include/fuse/

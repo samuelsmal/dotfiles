@@ -1,0 +1,8 @@
+version_bump()
+{
+  poetry version "$1"
+  git add */__init__.py pyproject.toml
+  git commit -m "Release of $(poetry version --short)"
+  git tag -a "$(poetry version --short)" -m "$(poetry version --short)"
+}
+alias vb='version_bump'

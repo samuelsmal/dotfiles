@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+# Usage: dev [project-dir]
+# Opens a tmux session with neovim + Claude Code side by side
+dir="${1:-.}"
+dir="$(cd "$dir" && pwd)"
+session=$(basename "$dir")
+
+if tmux has-session -t "$session" 2>/dev/null; then
+  tmux attach -t "$session"
+  exit 0
+fi
+
+tmux new-session -d -s "$session" -c "$dir"
+tmux split-window -h -l 40% -c "$dir"
+tmux send-keys -t "$session:1.2" 'claude' Enter
+tmux select-pane -t "$session:1.1"
+tmux attach -t "$session"
