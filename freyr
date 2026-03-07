@@ -157,7 +157,7 @@ install_packages () {
 
 link_dotfiles () {
   echo "Linking dotfiles ..."
-  stow -v git i3 ideavim js jupyter python spark stow tmux vim zsh bin claude karabiner
+  stow -v git ideavim js jupyter python stow tmux vim zsh bin claude karabiner
   echo "Linking dotfiles ... done"
 }
 

@@ -19,7 +19,7 @@ Directories without a `_` prefix are stow packages. Each contains files mirrorin
 - `bin/` - `.bin/`, `.bash_profile`, `.profile`
 - `claude/` - `.claude/settings.json`, statusline, hooks
 - `karabiner/` - `.config/karabiner/karabiner.json` (macOS keyboard remapping)
-- `i3/`, `ideavim/`, `js/`, `jupyter/`, `python/`, `spark/`, `stow/`
+- `ideavim/`, `js/`, `jupyter/`, `python/`, `stow/`
 
 ### Non-Stow Directories (`_` prefix)
 Directories prefixed with `_` are managed by freyr, not stow:
@@ -38,7 +38,7 @@ Directories prefixed with `_` are managed by freyr, not stow:
 
 ```bash
 # Link all dotfiles to $HOME
-stow -v git i3 ideavim js jupyter python spark stow tmux vim zsh bin claude karabiner
+stow -v git ideavim js jupyter python stow tmux vim zsh bin claude karabiner
 
 # Link a single package
 stow -v <package_name>
