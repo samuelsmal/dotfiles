@@ -13,7 +13,12 @@ migrate (){
 
   for step in $(seq $((version_lock + 1)) $newest_migration); do
     echo "doing step: $step"
-    eval "migration_step_$step"
+    if declare -f "migration_step_$step" > /dev/null; then
+      "migration_step_$step"
+    else
+      echo "ERROR: migration_step_$step not found, aborting" >&2
+      return 1
+    fi
 
     echo "$step" > "$version_lock_file_name"
   done

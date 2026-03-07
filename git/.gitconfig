@@ -49,7 +49,7 @@
   tree = log --oneline --decorate --all --graph
   prune = fetch origin --prune
   alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
-  yolo = "!f() { git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"; }; f"
+  yolo = "!f() { msg=$(curl -sf https://whatthecommit.com/index.txt) || msg='yolo'; git commit -m \"$msg\"; }; f"
 [color]
   branch = auto
   diff = auto

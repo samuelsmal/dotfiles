@@ -59,7 +59,9 @@ setup_android_dev () {
 install_ruby () {
   echo "Installing rvm & ruby ..."
   gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
-  curl -sSL https://get.rvm.io | bash -s -- -ignore-dotfiles
+  curl -sSL https://get.rvm.io -o /tmp/rvm-install.sh
+  bash /tmp/rvm-install.sh -ignore-dotfiles
+  rm /tmp/rvm-install.sh
   rvm install 2.6
   rvm use 2.6
   gem install tmuxinator
@@ -70,13 +72,17 @@ install_node () {
   echo "Installing node"
   echo "Installing node: installing nvm (maybe check version, last update 2019-08-02)"
   NVM_DIR="$HOME/.local/nvm"
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | NVM_DIR=$NVM_DIR bash && \
+  curl -o /tmp/nvm-install.sh https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh
+  NVM_DIR=$NVM_DIR bash /tmp/nvm-install.sh && \
+  rm /tmp/nvm-install.sh && \
   echo "Installing node: installing node" && \
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
   nvm install node
 
   echo "Installing node: installing yarn"
-  curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+  curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo -o /tmp/yarn.repo
+  sudo cp /tmp/yarn.repo /etc/yum.repos.d/yarn.repo
+  rm /tmp/yarn.repo
   sudo dnf install yarn
   echo "Installing node: done"
 }
