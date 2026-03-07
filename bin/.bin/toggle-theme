@@ -7,8 +7,13 @@ set -euo pipefail
 STATE_FILE="$HOME/.theme-mode"
 
 # Read current mode
-current="dark"
-[[ -f "$STATE_FILE" ]] && current=$(<"$STATE_FILE")
+if [[ -f "$STATE_FILE" ]]; then
+  current=$(<"$STATE_FILE")
+elif defaults read -g AppleInterfaceStyle &>/dev/null; then
+  current="dark"
+else
+  current="light"
+fi
 
 # Determine target mode
 if [[ $# -ge 1 ]]; then
