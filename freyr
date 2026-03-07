@@ -25,10 +25,6 @@ help_message () {
   echo " -s, --setup               Setup system (links dotfiles, install packages, ...)"
 }
 
-setup_epfl_wlan () {
-  bash ./epfl/wlan/_setup.sh
-}
-
 setup_ssh () {
   bash ./_ssh/_setup.sh
 }
