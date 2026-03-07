@@ -11,54 +11,82 @@
 ```
 
 
-# overview
+# Overview
 
-- Uses `stow` to handle the symlinking.
-- Checkout `freyr -h` (or the `freyr` file) for what you can do.
+Personal dotfiles repository managed with **GNU Stow** for symlinking and **freyr** (a custom bash script) for system setup, package installation, and migrations. Works on both Linux (Fedora) and macOS.
+
+## Structure
 
 ```
-# file tree (excerpt)
-├── README.md                  # this file
-├── .version_lock              # used for migrating
-├── (_[A-Za-z_-]+)             # folders with this pattern are used by `freyr`
-├── _freyr                     # helper scripts and utils for freyr
-│   ├── migrations             # folder containing the migration steps (must follow order)
-│   ├── migrations.sh          # this is the main migration script, check here to see how it works
-│   └── utils.sh               # utils for freyr
-├── stow                       # stow settings (ignore file)
-└── ([A-Za-z_-]+)              # folders with this pattern are used by `stow`
+dotfiles/
+├── freyr                       # setup, install & migration script
+├── CLAUDE.md                   # instructions for Claude Code
+│
+│ # Stow packages (symlinked to $HOME)
+├── bin/                        # ~/.bin/ scripts, .bash_profile, .profile
+├── claude/                     # ~/.claude/ (settings, hooks, statusline)
+├── git/                        # .gitconfig, .gitignore_global
+├── ideavim/                    # .ideavimrc
+├── js/                         # JS tooling config
+├── jupyter/                    # Jupyter config
+├── karabiner/                  # ~/.config/karabiner/ (macOS keyboard remapping)
+├── nvim/                       # ~/.config/nvim/
+├── python/                     # Python config
+├── stow/                       # .stow-global-ignore
+├── tmux/                       # .tmux.conf
+├── zsh/                        # .zshrc, .zsh/configs/, .zsh/functions/
+│
+│ # Non-stow directories (managed by freyr)
+├── _freyr/                     # helper scripts, utils, migrations
+├── _guitar/                    # guitar-related config
+├── _hosts/                     # host-specific setup (abulafia, arion, tir)
+├── _iterm2/                    # iTerm2 config
+├── _protonmail/                # ProtonMail bridge config
+├── _setup/                     # system setup scripts
+├── _ssh/                       # SSH setup
+├── _system-fixes/              # system fix scripts
+├── _system-settings/           # system settings (dconf, etc.)
+└── _thunderbird/               # Thunderbird config
 ```
 
-## What I use
+## Usage
 
-- vim
-  - dein (package manager)
-- tmux
-- tmux-powerline
-- stow (to setup the dotfiles)
-- gnome3
-- fedora
-- snaps (to isolate some packages I don't really trust, and to make the installation process easy)
-- wmctrl (to switch to already open windows)
-- keepassxc (works everywhere, and the firefox plugin is super cool)
-- conda (python)
+```bash
+# Link all stow packages to $HOME
+stow -v bin claude git ideavim js jupyter karabiner nvim python stow tmux zsh
 
-## TODO
+# Link a single package
+stow -v <package>
 
-- fix dconf loading, should overwrite, test with keyboard settings
-- dconf setting: how to deal with reloading the user
-- remove nordvpn
-- cleanup jupyter
-- add min install option (and add installer option)
-- add dropbox installer
-- add android studio
-- add thunderbird (fix google setup)
+# Unlink a package
+stow -D <package>
 
-## DONE (not all features)
+# Full system setup
+./freyr --setup
 
-- migrations! if you have multiple systems and want to keep them aligned, this might help
-- find a good script which sets up the symlinks in a non stupid way
-- use dconf and dconf-editor to extract the nice gnome settings
-- create setup script (should respect hostname or tags)
-- find a way to setup up ssh stuff in a good way
-- add keyboard shortcut exporter
+# Run migrations
+./freyr --migrate
+
+# Update system packages
+./freyr --update
+
+# See all options
+./freyr -h
+```
+
+## Zsh Configuration
+
+`.zshrc` loads configs modularly:
+1. Prompt (pure prompt) from `~/.zsh/prompt/`
+2. All `~/.zsh/configs/*.zsh` files (aliases, completion, editor, history, keybindings, path, various)
+3. All `~/.zsh/functions/*` (extract, g, version_bump)
+
+## Utility Scripts (`~/.bin/`)
+
+- `toggle-theme` - switch between light/dark themes (nvim, tmux, iTerm2)
+- `backup_system` - system backup
+- `dev` - development environment launcher
+- `load-ssh-keys` / `sshkeyloader` - SSH key management
+- `pdf_compress` - PDF compression
+- `start_default_programs` - launch default programs
+- `start-or-switch-to` - focus or launch an application
