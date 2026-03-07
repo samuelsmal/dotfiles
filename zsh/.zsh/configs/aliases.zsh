@@ -10,6 +10,7 @@ alias la='ls -lha'
 alias mkdir="mkdir -p"
 alias ls='eza'
 alias tree='eza --tree --long'
+alias vim='nvim'
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'

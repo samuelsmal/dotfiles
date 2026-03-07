@@ -12,6 +12,11 @@ return {
     },
     opts = {
       close_if_last_window = true,
+      filesystem = {
+        filtered_items = {
+          visible = true,
+        },
+      },
       window = {
         width = 30,
       },
