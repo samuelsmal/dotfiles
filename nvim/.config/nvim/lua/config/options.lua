@@ -43,7 +43,14 @@ opt.textwidth = 100
 
 opt.hidden = true
 
-opt.background = "dark"
+-- Read theme from ~/.theme-mode (toggle-theme sets this)
+local theme_file = vim.fn.expand("~/.theme-mode")
+if vim.fn.filereadable(theme_file) == 1 then
+  local mode = vim.fn.readfile(theme_file)[1]
+  opt.background = (mode == "light") and "light" or "dark"
+else
+  opt.background = "dark"
+end
 
 -- Backup and swap directories
 opt.backupdir = { ".backup/", vim.fn.expand("~/.backup/"), "/tmp//" }

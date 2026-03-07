@@ -1,3 +1,17 @@
+-- Reload theme from ~/.theme-mode on focus (set by toggle-theme)
+vim.api.nvim_create_autocmd("FocusGained", {
+  callback = function()
+    local theme_file = vim.fn.expand("~/.theme-mode")
+    if vim.fn.filereadable(theme_file) == 1 then
+      local mode = vim.fn.readfile(theme_file)[1]
+      local target = (mode == "light") and "light" or "dark"
+      if vim.o.background ~= target then
+        vim.o.background = target
+      end
+    end
+  end,
+})
+
 -- Highlight status bar in insert mode
 vim.api.nvim_create_autocmd("InsertEnter", {
   callback = function()
