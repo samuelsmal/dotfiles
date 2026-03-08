@@ -175,17 +175,150 @@ install_claude_code() {
   log_ok "claude code setup complete"
 }
 
+install_git() {
+  log_ok "setting up git..."
+
+  # Install git binary if missing
+  if command -v git >/dev/null 2>&1; then
+    log_skip "git already installed ($(git --version))"
+  elif has_sudo; then
+    sudo apt-get update -qq
+    sudo apt-get install -y -qq git
+    log_ok "installed git via apt"
+  else
+    log_err "git requires sudo to install via apt — skipping"
+    return 1
+  fi
+
+  # Fetch gitconfig and gitignore_global
+  fetch_config "git/.gitconfig" "$HOME/.gitconfig"
+  fetch_config "git/.gitignore_global" "$HOME/.gitignore_global"
+
+  # Prompt for user identity
+  local current_name current_email name email
+
+  current_name=$(git config --global user.name 2>/dev/null || true)
+  current_email=$(git config --global user.email 2>/dev/null || true)
+
+  printf 'Git user name'
+  [ -n "$current_name" ] && printf ' [%s]' "$current_name"
+  printf ': '
+  read -r name
+  [ -z "$name" ] && name="$current_name"
+
+  printf 'Git user email'
+  [ -n "$current_email" ] && printf ' [%s]' "$current_email"
+  printf ': '
+  read -r email
+  [ -z "$email" ] && email="$current_email"
+
+  if [ -n "$name" ]; then
+    git config --global user.name "$name"
+    log_ok "set git user.name = $name"
+  fi
+  if [ -n "$email" ]; then
+    git config --global user.email "$email"
+    log_ok "set git user.email = $email"
+  fi
+
+  log_ok "git setup complete"
+}
+
+install_aliases() {
+  log_ok "setting up shell aliases..."
+
+  local aliases_file="$HOME/.dotfiles_aliases.sh"
+
+  cat > "$aliases_file" << 'ALIASES'
+# Dotfiles shell aliases — managed by install.sh
+# Do not edit manually; re-run install.sh to update.
+
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+# ls / tree (use eza if available, fallback to system ls)
+if command -v eza >/dev/null 2>&1; then
+  alias l='eza -lh'
+  alias la='eza -lha'
+  alias ls='eza'
+  alias tree='eza --tree --long'
+else
+  alias l='ls -lh'
+  alias la='ls -lha'
+fi
+
+# Misc
+alias mkdir="mkdir -p"
+alias path='echo $PATH | tr -s ":" "\n"'
+alias please='sudo $(fc -ln -1)'
+
+# vim -> nvim (if available)
+if command -v nvim >/dev/null 2>&1; then
+  alias vim='nvim'
+fi
+
+# Git
+alias ga='git add '
+alias gap='git add -p'
+alias gps='git push'
+alias gpl='git pull'
+alias gcm='git commit -m '
+
+# Docker (if available)
+if command -v docker >/dev/null 2>&1; then
+  alias d="docker"
+  alias d_a="docker attach"
+  alias d_m="docker rm"
+  alias d_lc="docker ps"
+  alias d_li="docker images"
+  alias d_rm_all_containers='docker rm $(docker ps -a -q)'
+  alias d_rm_all_images='docker rmi $(docker images -q)'
+  alias d_stop_all='docker stop $(docker ps -a -q)'
+fi
+
+# Kubectl (if available)
+if command -v kubectl >/dev/null 2>&1; then
+  alias k="kubectl"
+fi
+ALIASES
+
+  log_ok "wrote $aliases_file"
+
+  # Idempotently add source line to shell rc files
+  local source_line='. "$HOME/.dotfiles_aliases.sh"'
+
+  for rc_file in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [ -f "$rc_file" ]; then
+      if ! grep -qF '.dotfiles_aliases.sh' "$rc_file"; then
+        printf '\n# Dotfiles aliases\n%s\n' "$source_line" >> "$rc_file"
+        log_ok "added source line to $rc_file"
+      else
+        log_skip "source line already in $rc_file"
+      fi
+    else
+      log_skip "$rc_file does not exist — skipping"
+    fi
+  done
+
+  log_ok "aliases setup complete (restart shell or run: source $aliases_file)"
+}
+
 # --- Argument parsing & main ---
 
 usage() {
   cat <<'EOF'
 Usage: install.sh [OPTIONS]
 
-Sets up tmux, neovim, and Claude Code on Ubuntu Linux.
+Sets up tmux, neovim, Claude Code, git, and shell aliases on Ubuntu Linux.
 
 Options:
   --help          Show this help message
-  --only TOOL     Install only one tool (tmux, neovim, claude)
+  --version       Show version
+  --only TOOL     Install only one tool (tmux, neovim, claude, git, aliases)
 EOF
 }
 
@@ -197,7 +330,7 @@ main() {
       --help) usage; exit 0 ;;
       --version) printf 'dotfiles installer v%s\n' "$VERSION"; exit 0 ;;
       --only)
-        [ $# -lt 2 ] && { log_err "--only requires an argument (tmux, neovim, claude)"; exit 1; }
+        [ $# -lt 2 ] && { log_err "--only requires an argument (tmux, neovim, claude, git, aliases)"; exit 1; }
         only="$2"; shift 2 ;;
       *) log_err "unknown option: $1"; usage; exit 1 ;;
     esac
@@ -209,11 +342,13 @@ main() {
   setup_prefix
 
   case "$only" in
-    "") install_tmux; install_neovim; install_claude_code ;;
+    "") install_tmux; install_neovim; install_claude_code; install_git; install_aliases ;;
     tmux) install_tmux ;;
     neovim) install_neovim ;;
     claude) install_claude_code ;;
-    *) log_err "unknown tool: $only (use tmux, neovim, or claude)"; exit 1 ;;
+    git) install_git ;;
+    aliases) install_aliases ;;
+    *) log_err "unknown tool: $only (use tmux, neovim, claude, git, aliases)"; exit 1 ;;
   esac
 
   log_ok "done!"
