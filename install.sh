@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+VERSION="1.1.1"
+
 REPO_RAW_URL="https://raw.githubusercontent.com/samuelsmal/dotfiles/master"
 INSTALL_PREFIX=""
 
@@ -193,12 +195,15 @@ main() {
   while [ $# -gt 0 ]; do
     case "$1" in
       --help) usage; exit 0 ;;
+      --version) printf 'dotfiles installer v%s\n' "$VERSION"; exit 0 ;;
       --only)
         [ $# -lt 2 ] && { log_err "--only requires an argument (tmux, neovim, claude)"; exit 1; }
         only="$2"; shift 2 ;;
       *) log_err "unknown option: $1"; usage; exit 1 ;;
     esac
   done
+
+  log_ok "dotfiles installer v${VERSION}"
 
   check_os
   setup_prefix
