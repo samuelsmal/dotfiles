@@ -1,31 +1,30 @@
 # This is Git's per-user configuration file.
 [column]
-        ui = auto
+  ui = auto
 [branch]
-        sort = -committerdate
+  sort = -committerdate
 [tag]
-        sort = version:refname
+  sort = version:refname
 [diff]
-        algorithm = histogram
-        colorMoved = plain
-        mnemonicPrefix = true
-        renames = true
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
 [fetch]
-        prune = true
-        pruneTags = true
-        all = true
+  prune = true
+  pruneTags = true
+  all = true
 [help]
-        autocorrect = prompt
+  autocorrect = prompt
 [commit]
-        verbose = true
+  verbose = true
 [rerere]
-        enabled = true
-        autoupdate = true
+  enabled = true
+  autoupdate = true
 [rebase]
-        autoSquash = true
-        autoStash = true
-        updateRefs = true
-
+  autoSquash = true
+  autoStash = true
+  updateRefs = true
 [user]
   name = Samuel von Baussnern
   email = samuel.vonbaussnern@d-one.ai
@@ -49,7 +48,6 @@
   tree = log --oneline --decorate --all --graph
   prune = fetch origin --prune
   alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
-  yolo = "!f() { msg=$(curl -sf https://whatthecommit.com/index.txt) || msg='yolo'; git commit -m \"$msg\"; }; f"
 [color]
   branch = auto
   diff = auto
