@@ -1,3 +1,10 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("/Users/SamuelvonBaussnern/.zsh/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
 fpath=( "$HOME/.zsh/prompt" $fpath )
 
 autoload -U promptinit; promptinit
