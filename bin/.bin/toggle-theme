@@ -50,11 +50,15 @@ fi
 
 # --- neovim: signal all instances via FocusGained ---
 # Neovim watches ~/.theme-mode on FocusGained events.
-# Send focus events directly to each pane without switching the active pane.
+# Input must be injected with `tmux send-keys`: writing to a pane's tty only
+# produces *output* on that pane and never reaches the program's stdin.
+# FocusGained is the 3-byte CSI sequence ESC [ I (hex 1b 5b 49).
 if [[ -n "${TMUX:-}" ]]; then
-  for pane_tty in $(tmux list-panes -a -F '#{pane_tty}'); do
-    printf '\e[I' > "$pane_tty" 2>/dev/null || true
-  done
+  while read -r pane_id pane_cmd; do
+    case "$pane_cmd" in
+      nvim|vim) tmux send-keys -t "$pane_id" -H 1b 5b 49 ;;
+    esac
+  done < <(tmux list-panes -a -F '#{pane_id} #{pane_current_command}')
 fi
 
 echo "Theme switched to: $target"
