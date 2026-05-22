@@ -157,7 +157,10 @@ install_packages () {
 
 link_dotfiles () {
   echo "Linking dotfiles ..."
-  stow -v git ideavim js jupyter python stow tmux vim zsh bin claude karabiner
+  stow -v git ideavim js jupyter python stow tmux vim zsh bin karabiner
+  # claude is NOT stowed: ~/.claude mixes config with Claude's runtime state and
+  # Claude rewrites settings.json at runtime, which breaks stow symlinks.
+  bash claude/install.sh
   echo "Linking dotfiles ... done"
 }
 

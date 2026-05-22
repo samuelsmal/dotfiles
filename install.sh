@@ -165,12 +165,30 @@ install_claude_code() {
     log_ok "installed claude code"
   fi
 
-  # Fetch configs
-  fetch_config "claude/.claude/settings.json" "$HOME/.claude/settings.json"
+  # Prefer the local symlink installer when run from a clone of the repo.
+  local script_dir
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
+  if [ -n "$script_dir" ] && [ -f "$script_dir/claude/install.sh" ]; then
+    bash "$script_dir/claude/install.sh"
+    log_ok "claude code setup complete (symlinked from clone)"
+    return 0
+  fi
+
+  # Remote bootstrap (curl | bash): copy the portable files.
+  # settings.json is a baseline; Claude rewrites it at runtime, so only seed it
+  # when missing and never touch a machine-local settings.local.json.
+  if [ -e "$HOME/.claude/settings.json" ]; then
+    log_skip "settings.json exists — leaving it (Claude manages it at runtime)"
+  else
+    fetch_config "claude/.claude/settings.json" "$HOME/.claude/settings.json"
+  fi
   fetch_config "claude/.claude/hooks/rtk-rewrite.sh" "$HOME/.claude/hooks/rtk-rewrite.sh"
   chmod +x "$HOME/.claude/hooks/rtk-rewrite.sh"
   fetch_config "claude/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
   chmod +x "$HOME/.claude/statusline-command.sh"
+  fetch_config "claude/.claude/RTK.md" "$HOME/.claude/RTK.md"
+  fetch_config "claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+  log_skip "skills/agents are not fetched remotely — run claude/install.sh from a clone for those"
 
   log_ok "claude code setup complete"
 }

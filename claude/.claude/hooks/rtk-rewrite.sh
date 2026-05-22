@@ -1,3 +1,9 @@
+#!/bin/bash
+# RTK auto-rewrite hook for Claude Code PreToolUse:Bash
+# Transparently rewrites raw commands to their rtk equivalents.
+# Outputs JSON with updatedInput to modify the command before execution.
+
+# Guards: skip silently if dependencies missing
 if ! command -v rtk &>/dev/null || ! command -v jq &>/dev/null; then
   exit 0
 fi
@@ -11,16 +17,23 @@ if [ -z "$CMD" ]; then
   exit 0
 fi
 
+# Extract the first meaningful command (before pipes, &&, etc.)
+# We only rewrite if the FIRST command in a chain matches.
 FIRST_CMD="$CMD"
 
+# Skip if already using rtk
 case "$FIRST_CMD" in
   rtk\ *|*/rtk\ *) exit 0 ;;
 esac
 
+# Skip commands with heredocs, variable assignments as the whole command, etc.
 case "$FIRST_CMD" in
   *'<<'*) exit 0 ;;
 esac
 
+# Strip leading env var assignments for pattern matching
+# e.g., "TEST_SESSION_ID=2 npx playwright test" → match against "npx playwright test"
+# but preserve them in the rewritten command for execution.
 ENV_PREFIX=$(echo "$FIRST_CMD" | grep -oE '^([A-Za-z_][A-Za-z0-9_]*=[^ ]* +)+' || echo "")
 if [ -n "$ENV_PREFIX" ]; then
   MATCH_CMD="${FIRST_CMD:${#ENV_PREFIX}}"
@@ -32,6 +45,7 @@ fi
 
 REWRITTEN=""
 
+# --- Git commands ---
 if echo "$MATCH_CMD" | grep -qE '^git[[:space:]]'; then
   GIT_SUBCMD=$(echo "$MATCH_CMD" | sed -E \
     -e 's/^git[[:space:]]+//' \
@@ -45,9 +59,11 @@ if echo "$MATCH_CMD" | grep -qE '^git[[:space:]]'; then
       ;;
   esac
 
+# --- GitHub CLI (added: api, release) ---
 elif echo "$MATCH_CMD" | grep -qE '^gh[[:space:]]+(pr|issue|run|api|release)([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^gh /rtk gh /')"
 
+# --- Cargo ---
 elif echo "$MATCH_CMD" | grep -qE '^cargo[[:space:]]'; then
   CARGO_SUBCMD=$(echo "$MATCH_CMD" | sed -E 's/^cargo[[:space:]]+(\+[^[:space:]]+[[:space:]]+)?//')
   case "$CARGO_SUBCMD" in
@@ -56,6 +72,7 @@ elif echo "$MATCH_CMD" | grep -qE '^cargo[[:space:]]'; then
       ;;
   esac
 
+# --- File operations ---
 elif echo "$MATCH_CMD" | grep -qE '^cat[[:space:]]+'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^cat /rtk read /')"
 elif echo "$MATCH_CMD" | grep -qE '^(rg|grep)[[:space:]]+'; then
@@ -69,6 +86,8 @@ elif echo "$MATCH_CMD" | grep -qE '^find[[:space:]]+'; then
 elif echo "$MATCH_CMD" | grep -qE '^diff[[:space:]]+'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^diff /rtk diff /')"
 elif echo "$MATCH_CMD" | grep -qE '^head[[:space:]]+'; then
+  # Transform: head -N file → rtk read file --max-lines N
+  # Also handle: head --lines=N file
   if echo "$MATCH_CMD" | grep -qE '^head[[:space:]]+-[0-9]+[[:space:]]+'; then
     LINES=$(echo "$MATCH_CMD" | sed -E 's/^head +-([0-9]+) +.+$/\1/')
     FILE=$(echo "$MATCH_CMD" | sed -E 's/^head +-[0-9]+ +(.+)$/\1/')
@@ -79,6 +98,7 @@ elif echo "$MATCH_CMD" | grep -qE '^head[[:space:]]+'; then
     REWRITTEN="${ENV_PREFIX}rtk read $FILE --max-lines $LINES"
   fi
 
+# --- JS/TS tooling (added: npm run, npm test, vue-tsc) ---
 elif echo "$MATCH_CMD" | grep -qE '^(pnpm[[:space:]]+)?(npx[[:space:]]+)?vitest([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed -E 's/^(pnpm )?(npx )?vitest( run)?/rtk vitest run/')"
 elif echo "$MATCH_CMD" | grep -qE '^pnpm[[:space:]]+test([[:space:]]|$)'; then
@@ -106,6 +126,7 @@ elif echo "$MATCH_CMD" | grep -qE '^pnpm[[:space:]]+playwright([[:space:]]|$)'; 
 elif echo "$MATCH_CMD" | grep -qE '^(npx[[:space:]]+)?prisma([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed -E 's/^(npx )?prisma/rtk prisma/')"
 
+# --- Containers (added: docker compose, docker run/build/exec, kubectl describe/apply) ---
 elif echo "$MATCH_CMD" | grep -qE '^docker[[:space:]]'; then
   if echo "$MATCH_CMD" | grep -qE '^docker[[:space:]]+compose([[:space:]]|$)'; then
     REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^docker /rtk docker /')"
@@ -133,14 +154,17 @@ elif echo "$MATCH_CMD" | grep -qE '^kubectl[[:space:]]'; then
       ;;
   esac
 
+# --- Network ---
 elif echo "$MATCH_CMD" | grep -qE '^curl[[:space:]]+'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^curl /rtk curl /')"
 elif echo "$MATCH_CMD" | grep -qE '^wget[[:space:]]+'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^wget /rtk wget /')"
 
+# --- pnpm package management ---
 elif echo "$MATCH_CMD" | grep -qE '^pnpm[[:space:]]+(list|ls|outdated)([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^pnpm /rtk pnpm /')"
 
+# --- Python tooling ---
 elif echo "$MATCH_CMD" | grep -qE '^pytest([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^pytest/rtk pytest/')"
 elif echo "$MATCH_CMD" | grep -qE '^python[[:space:]]+-m[[:space:]]+pytest([[:space:]]|$)'; then
@@ -152,6 +176,7 @@ elif echo "$MATCH_CMD" | grep -qE '^pip[[:space:]]+(list|outdated|install|show)(
 elif echo "$MATCH_CMD" | grep -qE '^uv[[:space:]]+pip[[:space:]]+(list|outdated|install|show)([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^uv pip /rtk pip /')"
 
+# --- Go tooling ---
 elif echo "$MATCH_CMD" | grep -qE '^go[[:space:]]+test([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^go test/rtk go test/')"
 elif echo "$MATCH_CMD" | grep -qE '^go[[:space:]]+build([[:space:]]|$)'; then
@@ -162,13 +187,16 @@ elif echo "$MATCH_CMD" | grep -qE '^golangci-lint([[:space:]]|$)'; then
   REWRITTEN="${ENV_PREFIX}$(echo "$CMD_BODY" | sed 's/^golangci-lint/rtk golangci-lint/')"
 fi
 
+# If no rewrite needed, approve as-is
 if [ -z "$REWRITTEN" ]; then
   exit 0
 fi
 
+# Build the updated tool_input with all original fields preserved, only command changed
 ORIGINAL_INPUT=$(echo "$INPUT" | jq -c '.tool_input')
 UPDATED_INPUT=$(echo "$ORIGINAL_INPUT" | jq --arg cmd "$REWRITTEN" '.command = $cmd')
 
+# Output the rewrite instruction
 jq -n \
   --argjson updated "$UPDATED_INPUT" \
   '{

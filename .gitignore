@@ -5,3 +5,11 @@
 vim/.vim/black
 zsh/.zsh/cache
 **/*.spl
+
+# Claude Code: machine-local / private content — never commit.
+# settings.local.json holds per-machine permission allowlists.
+# agents/ currently holds work-specific agents (internal project names); keep
+# them out of this public repo until reviewed. The installer still symlinks
+# whatever is present on the machine.
+claude/.claude/settings.local.json
+claude/.claude/agents/
