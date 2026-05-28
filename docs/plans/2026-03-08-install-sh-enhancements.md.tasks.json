@@ -1,0 +1,12 @@
+{
+  "planPath": "docs/plans/2026-03-08-install-sh-enhancements.md",
+  "tasks": [
+    {"id": 1, "subject": "Task 0: Add VERSION variable and display", "status": "pending"},
+    {"id": 2, "subject": "Task 1: Create release script (scripts/tag-release.sh)", "status": "pending", "blockedBy": [1]},
+    {"id": 3, "subject": "Task 2: Add pre-commit hook for version mismatch warning", "status": "pending", "blockedBy": [2]},
+    {"id": 4, "subject": "Task 3: Add install_git() function", "status": "pending", "blockedBy": [1]},
+    {"id": 5, "subject": "Task 4: Add install_aliases() function", "status": "pending", "blockedBy": [1]},
+    {"id": 6, "subject": "Task 5: Final integration and testing", "status": "pending", "blockedBy": [1, 2, 3, 4, 5]}
+  ],
+  "lastUpdated": "2026-03-08T00:00:00Z"
+}

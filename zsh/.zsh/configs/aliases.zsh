@@ -38,8 +38,3 @@ alias d_rm_untagged_images='docker rmi $(docker images -a | grep "^<none>" | awk
 alias d_stop_all='docker stop $(docker ps -a -q)'
 
 alias k="kubectl"
-
-# Work stuff
-alias push_code='rsync -zaP --exclude="__pycache__/" --exclude=".idea/" --exclude=".pytest_cache/" --exclude=".DS_STORE"'
-alias stopvpn="launchctl unload /Library/LaunchAgents/com.paloaltonetworks.gp.pangp*"
-alias startvpn="launchctl load /Library/LaunchAgents/com.paloaltonetworks.gp.pangp*"
