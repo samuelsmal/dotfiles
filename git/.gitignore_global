@@ -29,3 +29,5 @@ $RECYCLE.BIN/
 .workon
 *~
 *.swp
+
+**/.claude/settings.local.json

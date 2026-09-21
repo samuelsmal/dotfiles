@@ -50,6 +50,11 @@
   prune = fetch origin --prune
   alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
   yolo = "!f() { msg=$(curl -sf https://whatthecommit.com/index.txt) || msg='yolo'; git commit -m \"$msg\"; }; f"
+  ; Worktrees in the bare-repo layout. See git/README.md in the dotfiles repo.
+  wtclone = "!$HOME/.local/bin/wtclone.sh"
+  wtadd = "!$HOME/.local/bin/wtadd.sh"
+  wtremove = "!$HOME/.local/bin/wtremove.sh"
+  wtlist = "!$HOME/.local/bin/wtlist.sh"
 [color]
   branch = auto
   diff = auto
