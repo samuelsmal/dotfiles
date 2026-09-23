@@ -13,3 +13,6 @@ zsh/.zsh/cache
 # whatever is present on the machine.
 claude/.claude/settings.local.json
 claude/.claude/agents/
+
+# iTerm2 runtime data (auto-created notes)
+_iterm2/Data/
