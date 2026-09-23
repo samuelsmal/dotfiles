@@ -6,7 +6,7 @@
 # settings.json at runtime — which clobbers stow symlinks. See claude/README.md.
 #
 # Strategy:
-#   - Symlink user-authored, static config (hooks, skills, statusline, RTK.md,
+#   - Symlink user-authored, static config (hooks, skills, statusline,
 #     CLAUDE.md, and agents/commands when present) so repo edits are live.
 #   - settings.json is a portable BASELINE: copied only if missing. Claude owns
 #     it at runtime, so we never symlink it and never clobber an existing one.
@@ -66,11 +66,9 @@ link_contents skills
 link_contents agents     # no-op until the repo tracks any
 link_contents commands   # no-op until the repo tracks any
 link statusline-command.sh
-link RTK.md
 link CLAUDE.md
 
 # executables (chmod the real files behind the symlinks)
-[ -e "$SRC/hooks/rtk-rewrite.sh" ]   && chmod +x "$SRC/hooks/rtk-rewrite.sh"
 [ -e "$SRC/statusline-command.sh" ]  && chmod +x "$SRC/statusline-command.sh"
 
 # --- settings.json: portable baseline, copied (never symlinked) ---

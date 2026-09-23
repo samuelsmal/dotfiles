@@ -182,11 +182,8 @@ install_claude_code() {
   else
     fetch_config "claude/.claude/settings.json" "$HOME/.claude/settings.json"
   fi
-  fetch_config "claude/.claude/hooks/rtk-rewrite.sh" "$HOME/.claude/hooks/rtk-rewrite.sh"
-  chmod +x "$HOME/.claude/hooks/rtk-rewrite.sh"
   fetch_config "claude/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
   chmod +x "$HOME/.claude/statusline-command.sh"
-  fetch_config "claude/.claude/RTK.md" "$HOME/.claude/RTK.md"
   fetch_config "claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
   log_skip "skills/agents are not fetched remotely — run claude/install.sh from a clone for those"
 
