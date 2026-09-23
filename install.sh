@@ -185,7 +185,7 @@ install_claude_code() {
   fetch_config "claude/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
   chmod +x "$HOME/.claude/statusline-command.sh"
   fetch_config "claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-  log_skip "skills/agents are not fetched remotely — run claude/install.sh from a clone for those"
+  log_skip "skills/agents/output-styles are not fetched remotely — run claude/install.sh from a clone for those"
 
   log_ok "claude code setup complete"
 }

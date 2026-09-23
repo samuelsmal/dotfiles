@@ -17,7 +17,7 @@ Run `bash claude/install.sh` (freyr does this automatically; `--force` re-seeds
 the settings baseline). It is idempotent.
 
 - **Symlinked** (repo is the source of truth, edits are live everywhere):
-  `hooks/`, `skills/`, `agents/`, `commands/`,
+  `hooks/`, `skills/`, `output-styles/`, `agents/`, `commands/`,
   `statusline-command.sh`, `CLAUDE.md`. Symlinks are per-item, so machine-only entries
   (e.g. locally installed skills) are preserved.
 - **Copied baseline** — `settings.json`: portable defaults, seeded only when
