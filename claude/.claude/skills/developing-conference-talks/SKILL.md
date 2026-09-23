@@ -148,7 +148,7 @@ If any answer is no, **adjust the outline, not the speaker.** A perfect concept 
 | Symptom | Fix |
 |---|---|
 | Speaker wants to "set up the company background" | Cut. Audience came for insight, not bio. |
-| Full architecture diagram for 5 minutes | Cut to a simplified version showing only the parts in the story. |
+| Full architecture diagram **dumped on screen all at once** | A complete diagram shown in one go is the killer — cut it. But a full diagram **revealed one beat per layer** (the template's draw.io reveal pattern) is a *signature move*: keep it, and pace it so each layer lands a single idea. The distinction is dumped-vs-revealed, not simple-vs-complex. |
 | Thesis sounds like every other talk in the genre | Return to earned-insight gate. |
 | Three "main lessons" all at the same level | Promote one to headline, demote others to supporting. |
 | Cold open / dramatic structure proposed without checking speaker fit | Stop. Confirm the speaker can deliver it. |
@@ -191,3 +191,5 @@ The doc must include:
 ## Terminal State
 
 Skill ends when the concept doc is saved. **Do not** automatically draft slides, write speaker notes, or invoke other skills. The user decides when (and whether) to move on. If they ask for slides immediately after, treat it as a new request.
+
+In this talk template the downstream pipeline is `writing-talk-slides` → `building-talk-decks-with-typst` (`concept.md` → `slides.md` → `deck/deck.typ`). That's where the concept goes next — but don't auto-advance; wait for the user.
