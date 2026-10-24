@@ -16,3 +16,7 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/SamuelvonBaussnern/.local/bin:$PATH"
