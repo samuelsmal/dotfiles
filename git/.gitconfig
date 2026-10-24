@@ -55,6 +55,7 @@
   wtadd = "!$HOME/.local/bin/wtadd.sh"
   wtremove = "!$HOME/.local/bin/wtremove.sh"
   wtlist = "!$HOME/.local/bin/wtlist.sh"
+  wtclean = "!$HOME/.local/bin/wtclean.sh"
 [color]
   branch = auto
   diff = auto

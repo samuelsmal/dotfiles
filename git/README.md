@@ -22,6 +22,7 @@ project/
 | `git wtadd <name> [-b branch] [-c commit-ish]` | Adds a sibling worktree, copying `.env`, `.envrc`, `.tool-versions`, `mise.toml` and a root `node_modules` |
 | `git wtremove <name> [-f]` | Removes a worktree, prunes, deletes its branch |
 | `git wtlist` | Lists worktrees with their branches, hiding `.bare` |
+| `git wtclean [-n] [-y] [-d] [path...]` | Deletes gitignored build output (`build/`, `build-*/`, `DerivedData/`, `.build/`) in every worktree, plus the repo's Xcode DerivedData folders; lists sizes and asks first. A path whose children are repos sweeps them all |
 
 A `/` in a worktree name becomes `_` in the directory, so `chore/foo` lives in `chore_foo`.
 
