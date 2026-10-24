@@ -158,9 +158,13 @@ install_packages () {
 link_dotfiles () {
   echo "Linking dotfiles ..."
   stow -v git ideavim js jupyter python stow tmux vim zsh bin karabiner
-  # claude is NOT stowed: ~/.claude mixes config with Claude's runtime state and
-  # Claude rewrites settings.json at runtime, which breaks stow symlinks.
-  bash claude/install.sh
+  # The Claude Code config lives in agentkit (github.com/samuelsmal/agentkit), not here.
+  local agentkit="${AGENTKIT_DIR:-$HOME/proj/50_priv/agentic-helpers}"
+  if [ -f "$agentkit/claude/install.sh" ]; then
+    bash "$agentkit/claude/install.sh"
+  else
+    echo "agentkit not found at $agentkit, skipping Claude Code config (set AGENTKIT_DIR)"
+  fi
   echo "Linking dotfiles ... done"
 }
 

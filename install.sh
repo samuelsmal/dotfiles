@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="1.1.1"
+VERSION="1.2.0"
 
 REPO_RAW_URL="https://raw.githubusercontent.com/samuelsmal/dotfiles/master"
+# The Claude Code config lives in agentkit, not in this repo.
+AGENTKIT_RAW_URL="https://raw.githubusercontent.com/samuelsmal/agentkit/main"
 INSTALL_PREFIX=""
 
 # --- Logging ---
@@ -29,9 +31,10 @@ backup_file() {
 fetch_config() {
   local repo_path="$1"
   local dest="$2"
+  local base_url="${3:-$REPO_RAW_URL}"
   mkdir -p "$(dirname "$dest")"
   backup_file "$dest"
-  if curl -fsSL "${REPO_RAW_URL}/${repo_path}" -o "$dest"; then
+  if curl -fsSL "${base_url}/${repo_path}" -o "$dest"; then
     log_ok "fetched $dest"
   else
     log_err "failed to fetch $repo_path"
@@ -165,12 +168,11 @@ install_claude_code() {
     log_ok "installed claude code"
   fi
 
-  # Prefer the local symlink installer when run from a clone of the repo.
-  local script_dir
-  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" 2>/dev/null && pwd || true)"
-  if [ -n "$script_dir" ] && [ -f "$script_dir/claude/install.sh" ]; then
-    bash "$script_dir/claude/install.sh"
-    log_ok "claude code setup complete (symlinked from clone)"
+  # Prefer the local symlink installer when an agentkit clone exists.
+  local agentkit="${AGENTKIT_DIR:-$HOME/proj/50_priv/agentic-helpers}"
+  if [ -f "$agentkit/claude/install.sh" ]; then
+    bash "$agentkit/claude/install.sh"
+    log_ok "claude code setup complete (symlinked from agentkit)"
     return 0
   fi
 
@@ -180,12 +182,12 @@ install_claude_code() {
   if [ -e "$HOME/.claude/settings.json" ]; then
     log_skip "settings.json exists — leaving it (Claude manages it at runtime)"
   else
-    fetch_config "claude/.claude/settings.json" "$HOME/.claude/settings.json"
+    fetch_config "claude/.claude/settings.json" "$HOME/.claude/settings.json" "$AGENTKIT_RAW_URL"
   fi
-  fetch_config "claude/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh"
+  fetch_config "claude/.claude/statusline-command.sh" "$HOME/.claude/statusline-command.sh" "$AGENTKIT_RAW_URL"
   chmod +x "$HOME/.claude/statusline-command.sh"
-  fetch_config "claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
-  log_skip "skills/agents/output-styles are not fetched remotely — run claude/install.sh from a clone for those"
+  fetch_config "claude/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md" "$AGENTKIT_RAW_URL"
+  log_skip "skills/agents/output-styles are not fetched remotely — clone agentkit and run its claude/install.sh"
 
   log_ok "claude code setup complete"
 }

@@ -24,7 +24,6 @@ dotfiles/
 │
 │ # Stow packages (symlinked to $HOME)
 ├── bin/                        # ~/.bin/ scripts, .bash_profile, .profile
-├── claude/                     # ~/.claude/ (settings, hooks, statusline)
 ├── git/                        # .gitconfig, .gitignore_global
 ├── ideavim/                    # .ideavimrc
 ├── js/                         # JS tooling config
@@ -53,7 +52,7 @@ dotfiles/
 
 ```bash
 # Link all stow packages to $HOME
-stow -v bin claude git ideavim js jupyter karabiner nvim python stow tmux zsh
+stow -v bin git ideavim js jupyter karabiner nvim python stow tmux zsh
 
 # Link a single package
 stow -v <package>

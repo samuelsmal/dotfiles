@@ -17,7 +17,6 @@ Directories without a `_` prefix are stow packages. Each contains files mirrorin
 - `vim/` - `.vimrc`, `.vim/`
 - `tmux/` - `.tmux.conf`
 - `bin/` - `.bin/`, `.bash_profile`, `.profile`
-- `claude/` - `.claude/settings.json`, statusline, hooks
 - `karabiner/` - `.config/karabiner/karabiner.json` (macOS keyboard remapping)
 - `ideavim/`, `js/`, `jupyter/`, `python/`, `stow/`
 
@@ -34,11 +33,14 @@ Directories prefixed with `_` are managed by freyr, not stow:
 2. All `~/.zsh/configs/*.zsh` files (aliases, completion, editor, history, keybindings, path, various)
 3. All `~/.zsh/functions/*` files (extract, g, version_bump)
 
+The Claude Code config (`~/.claude`) and all skills live in agentkit
+(`~/proj/50_priv/agentic-helpers`, github.com/samuelsmal/agentkit), not in this repo.
+
 ## Key Commands
 
 ```bash
 # Link all dotfiles to $HOME
-stow -v git ideavim js jupyter python stow tmux vim zsh bin claude karabiner
+stow -v git ideavim js jupyter python stow tmux vim zsh bin karabiner
 
 # Link a single package
 stow -v <package_name>
