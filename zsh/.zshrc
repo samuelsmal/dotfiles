@@ -28,13 +28,13 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-source $HOME/.local/bin/fdh_tooling_completions.bash
-
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.1.2
 
 source $HOME/.local/bin/done_pa_completions.bash
+
+command -v agentkit >/dev/null && eval "$(agentkit completion)"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/SamuelvonBaussnern/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/SamuelvonBaussnern/Downloads/google-cloud-sdk/path.zsh.inc'; fi
